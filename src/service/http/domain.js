@@ -1,0 +1,27 @@
+
+
+/**
+** 设置API接口域名
+**/
+let apiUrl = '';
+let HOST = process.env.HOST;
+
+// const api_test = 'http://niukou.api.chengmikeji.com'
+// const api_prod = 'http://niukou.api.chengmikeji.com'
+
+// const api_test = 'http://niukou.webadmin.chengmikeji.com/api'
+// const api_prod = 'http://niukou.webadmin.chengmikeji.com/api'
+// 
+
+const api_test = 'http://niukou.api.chengmikeji.com'
+const api_prod = '/apis/'
+
+if ( HOST == 'test' ){
+	apiUrl = api_test
+}else if ( HOST == 'prod' ){
+	apiUrl = api_prod
+}else{
+	apiUrl = api_test
+}
+
+export default apiUrl
