@@ -18,14 +18,17 @@
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="pic_url" label="广告图片">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="phone" label="广告位置">
+    <!--   <el-table-column show-overflow-tooltip prop="phone" label="广告位置">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="type" label="跳转类型">
+      <el-table-column show-overflow-tooltip prop="goto_type" label="跳转类型">
         <template slot-scope="scope">
           <a :href="scope.row.official_web" target="_blank">{{scope.row.official_web}}</a>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column show-overflow-tooltip prop="message" label="时间">
+        <template slot-scope="scope">
+          {{scope.row.start_time + '至' + scope.row.end_time}}
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="save_time" label="上线/下线">
       </el-table-column>
@@ -117,7 +120,7 @@ export default {
     geteventlist() {
       let url = '/ad'
       let data = {
-        page: this.page.page_size,
+        page_size: this.page.page_size,
         page_index: this.page.page_index,
         // name: this.form.name,
         // begin_time: this.form.begin_time,

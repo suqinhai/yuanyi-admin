@@ -15,6 +15,11 @@ const goodsManage = () => import('@/views/productManage/goodsManage')
 //文章管理
 
 
+
+//广告管理
+const advList = () => import('@/views/advManage/advList')
+
+
 Vue.use(Router)
 
 const vueRouter = new Router({
@@ -52,6 +57,19 @@ const vueRouter = new Router({
           path: '/goodsManage',
           name: '商品管理',
           component: goodsManage,
+        },
+      ]
+    },
+    {
+      path: '/',
+      name: '广告管理',
+      component: Main,
+      iconCls: 'fa fa-gamepad',
+      children: [
+        {
+          path: '/advList',
+          name: '广告列表',
+          component: advList,
         },
       ]
     },
