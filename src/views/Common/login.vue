@@ -54,37 +54,27 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.logining = true;
-          let url = '/back/login.htm?username=' + this.form.username + '&password=' + this.form.password;
+          let url = '/login';
           let data = {
-            username: this.form.username,
+            name: this.form.username,
             password: this.form.password
           };
-          this.$axios.post(url).then(res => {
+          this.$axios.post(url,data).then(res => {
 
             this.logining = false;
             if (this.checked == true) {
               data.checked = true
               window.localStorage.setItem('userinfo', JSON.stringify(data))
             }
-            window.localStorage.setItem('token', res.data.data.token)
-            window.localStorage.setItem('adminInfo', JSON.stringify(res.data.data.userInfo))
+            window.localStorage.setItem('token', res.data.token)
+            this.$router.push('/clientManage')
 
-            this.$router.push('/orderList')
-            // this.getMent()
           });
         } else {
           console.log('error submit!!');
           return false;
         }
       });
-    },
-    getMent() {
-
-      let url = '/admin/Eenu/treeEenu'
-      this.$axios.get(url).then(res => {
-        console.log(res)
-        this.$router.push(res.data.data[0].children[0].path ? res.data.data[0].children[0].path : '/')
-      })
     },
   }
 }

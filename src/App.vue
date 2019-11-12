@@ -152,7 +152,7 @@ body {
 /* custom */
 
 a {
-    color: #7e8c8d;
+    color: #409EFF;
     text-decoration: none;
     -webkit-backface-visibility: hidden;
 }

@@ -2,8 +2,7 @@
   <el-row class="container">
     <el-col :span="24" class="header">
       <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-        <!-- {{collapsed?'':'纽扣好物'}} -->
-       <!--  <img src="@/assets/images/Common/logo.png" alt="" height="40" style="width:105px;margin:5px" v-if="!collapsed"> -->
+        园艺后台管理
       </el-col>
       <el-col :span="10">
         <div class="tools" @click.prevent="collapse">

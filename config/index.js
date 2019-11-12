@@ -11,20 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/back': {    //将www.exaple.com印射为/apis
-            target: 'http://niukou.api.chengmikeji.com',  // 接口域名
+        '/apis': {    //将www.exaple.com印射为/apis
+            target: 'http://www.forrily.com:8089/',  // 接口域名
             changeOrigin: true,  //是否跨域
             pathRewrite: {
-                '^/back': '/back'   //需要rewrite的,
+                '^/apis': ''   //需要rewrite的,
             }              
         },
-        '/admin': {    //将www.exaple.com印射为/apis
-            target: 'http://niukou.api.chengmikeji.com',  // 接口域名
-            changeOrigin: true,  //是否跨域
-            pathRewrite: {
-                '^/admin': '/admin'   //需要rewrite的,
-            }              
-        }
     },
 
 

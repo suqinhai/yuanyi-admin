@@ -13,8 +13,8 @@ let HOST = process.env.HOST;
 // const api_prod = 'http://niukou.webadmin.chengmikeji.com/api'
 // 
 
-const api_test = 'http://niukou.api.chengmikeji.com'
-const api_prod = '/apis/'
+// const api_test = 'http://www.forrily.com:8089/'
+const api_test = '/apis/admin/'
 
 if ( HOST == 'test' ){
 	apiUrl = api_test

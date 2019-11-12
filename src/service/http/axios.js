@@ -13,10 +13,10 @@ axiosIns.defaults.baseURL = domain
 // 添加请求拦截器
 axiosIns.interceptors.request.use(function(config) {
   // 在发送请求之前做些什么
-  let contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
+  // let contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
   //  console.log(config.headers['Content-Type'])
   // if(config.headers['Content-Type']) {
-  // let contentType = 'application/json'
+  let contentType = 'application/json'
   // } 
   config.headers['Content-Type'] = contentType
   // config.headers['Content-Type'] = 
@@ -29,7 +29,7 @@ axiosIns.interceptors.request.use(function(config) {
   // }
   // 把token放到header里面
   if (token) {
-    config.headers['Authorizations'] = token
+    config.headers['f-token'] = token
   }
   return config
 }, function(error) {
@@ -51,30 +51,19 @@ const ajaxMethod = ['get', 'post']
 const api = {}
 ajaxMethod.forEach((method) => {
   api['baseURL'] = axiosIns.defaults.baseURL
-
   api[method] = function(uri, data, config) {
-    // uri += '?'
     return new Promise(function(resolve, reject) {
-      // if ( data ){
-      //   for ( let key in data ){
-      //     uri += '&' + key + '=' + data[key]
-      //   }
-      // }
-      
       axiosIns[method](uri, data, config).then((response) => {
-        if(response.data.respCode == -1){
-            // Message.error(response.data.msg)
-            window.localStorage.removeItem('token');
-            router.replace('/login')
-            return false
+        if (response.data.code == -1) {
+          window.localStorage.removeItem('token');
+          router.replace('/login')
+          return false
         }
-        if(response.data.respCode != 1){
-            Message.error(response.data.msg)
-            return false
+        if (response.data.code != 0) {
+          Message.error(response.data.msg)
+          return false
         }
-        if (response.data.respCode == 1) {
-            resolve(response)
-        }
+        resolve(response.data)
       }).catch(function(error) {
         if (error.response) {
           // 请求已发出，但服务器响应的状态码不在 2xx 范围内
