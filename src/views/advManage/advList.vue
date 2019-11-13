@@ -120,14 +120,19 @@ export default {
     geteventlist() {
       let url = '/ad'
       let data = {
-        page_size: this.page.page_size,
-        page_index: this.page.page_index,
+        page:{
+          page_size: this.page.page_size,
+          page_index: this.page.page_index,
+        },
+        "slogan":"",
+        "start_time":"",
+        "end_time": "",
         // name: this.form.name,
         // begin_time: this.form.begin_time,
         // end_time: this.form.end_time,
       }
-      this.$axios.post(url, data).then((res) => {
-        this.tableData = res.data.crms
+      this.$axios.get(url, data).then((res) => {
+        this.tableData = res.data.ads
         this.count = res.data.page.total
       })
     },

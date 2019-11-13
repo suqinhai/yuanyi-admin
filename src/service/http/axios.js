@@ -54,7 +54,7 @@ ajaxMethod.forEach((method) => {
   api[method] = function(uri, data, config) {
     return new Promise(function(resolve, reject) {
       axiosIns[method](uri, data, config).then((response) => {
-        if (response.data.code == -1) {
+        if (response.data.code == -1006) {
           window.localStorage.removeItem('token');
           router.replace('/login')
           return false

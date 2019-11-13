@@ -109,8 +109,10 @@ export default {
     geteventlist() {
       let url = '/crm/list'
       let data = {
-        page: this.page.page_size,
-        page_index: this.page.page_index,
+        page: {
+          page_size:this.page.page_size,
+          page_index: this.page.page_index,
+        },
         name: this.form.name,
         begin_time: this.form.begin_time,
         end_time: this.form.end_time,
