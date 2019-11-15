@@ -10,25 +10,10 @@
       </el-table-column>
        <el-table-column show-overflow-tooltip prop="id" label="ID">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="sort" label="排序">
+      <el-table-column show-overflow-tooltip prop="type_name" label="分类名称">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="name" label="分类名称">
+       <el-table-column show-overflow-tooltip prop="sort" label="排序">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="desc" label="描述">
-      </el-table-column>
-      <el-table-column show-overflow-tooltip prop="states" label="显示">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.states" @change="changeSwitch(scope.row)">
-          </el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column show-overflow-tooltip prop="level" label="级别">
-      </el-table-column>
-<!--       <el-table-column show-overflow-tooltip prop="level" label="下级分类">
-        <template slot-scope="scope">
-          <span class="el-icon-s-unfold" @click="clickLevel(scope.row)"></span>
-        </template>
-      </el-table-column> -->
       <el-table-column show-overflow-tooltip label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="handleModif(scope.row)" type="text" size="small">修改</el-button>
@@ -44,13 +29,10 @@
     <el-dialog title="新增分类" :visible.sync="dialogVisible" :before-close="handleClose">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="分类名称">
-          <el-input v-model="form.name" placeholder="请输入分类名称"></el-input>
+          <el-input v-model="form.type_name" placeholder="请输入分类名称"></el-input>
         </el-form-item>
         <el-form-item label="排序">
           <el-input v-model="form.sort" placeholder="请输入排序" type="number"></el-input>
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input type="textarea" :rows="3" v-model="form.desc" placeholder="请输入描述"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -65,7 +47,7 @@ export default {
   data() {
     return {
       form: {
-        name: '',
+        type_name: '',
         parent_id: 0,
         sort: '',
         desc: '',
@@ -85,14 +67,14 @@ export default {
   methods: {
     clickLevel(data) {
       this.$router.push({
-        path: '/lowerClassifyList',
+        path: '/articleLowerClassifyList',
         query:{
           parent_id: data.id
         }
       })
     },
     handleModif(data){
-      this.form = JSON.parse(JSON.stringify(data))
+      this.form = JSON.parse(JSON.stringify(data))  
       this.form.parent_id = 0
       this.dialogVisible = true
     },
@@ -102,7 +84,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let url = '/product/category/delete'
+        let url = '/article/category/delete'
         let data = {
           id: row.id
         }
@@ -118,16 +100,15 @@ export default {
     save() {
       let url
       let data = {
-        name: this.form.name,
+        type_name: this.form.type_name,
         parent_id: this.form.parent_id,
         sort: parseInt(this.form.sort),
-        desc: this.form.desc,
       }
       if(this.form.id){
-        url = '/product/category/modify'
+        url = '/article/category/edit'
         data['id'] = this.form.id
       }else{
-        url = '/product/category/new'
+        url = '/article/category/new'
         data['parent_id'] = this.form.parent_id
       }
       this.$axios.post(url, data).then((res) => {
@@ -141,7 +122,7 @@ export default {
     },
     add() {
       this.form = {
-        name: '',
+        type_name: '',
         parent_id: 0,
         sort: '',
         desc: '',
@@ -164,7 +145,7 @@ export default {
       })
     },
     geteventlist() {
-      let url = '/product/category/list'
+      let url = '/article/category/list'
       let data = {
         parent_id: this.form.parent_id,
         page:{
@@ -173,10 +154,10 @@ export default {
         }
       }
       this.$axios.post(url,data).then((res) => {
-        res.data.pcs.forEach((res) => {
+        res.data.ats.forEach((res) => {
           res.states = res.states ? true : false
         })
-        this.tableData = res.data.pcs
+        this.tableData = res.data.ats
         this.count = res.data.page.total
       })
     },

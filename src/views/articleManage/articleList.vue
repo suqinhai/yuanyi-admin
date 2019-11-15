@@ -14,25 +14,37 @@
     <el-table :data="tableData" border style="width: 100%" size="mini">
       <el-table-column show-overflow-tooltip prop="id" type="selection" width="55">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="id" label="ID">
+      <el-table-column show-overflow-tooltip prop="id" label="id">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="name" label="姓名">
+      <el-table-column show-overflow-tooltip prop="title" label="标题">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="email" label="邮箱">
+      <el-table-column show-overflow-tooltip prop="author" label="文章作者">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="phone" label="手机">
+      <el-table-column show-overflow-tooltip prop="source" label="文章来源">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="official_web" label="官网">
-        <template slot-scope="scope">
-          <a :href="scope.row.official_web" target="_blank">{{scope.row.official_web}}</a>
-        </template>
+      <el-table-column show-overflow-tooltip prop="source_url" label="文章来源链接">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="company" label="公司">
+      <el-table-column show-overflow-tooltip prop="preview" label="文章预览图">
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="key_word" label="文章关键字">
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="summary" label="文章摘要">
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="clicks" label="浏览量">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="save_time" label="发布时间">
       </el-table-column>
+      <el-table-column show-overflow-tooltip prop="sort" label="排序">
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="states" label="状态">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.states" @change="changeSwitch(scope.row)">
+          </el-switch>
+        </template>
+      </el-table-column>
       <el-table-column show-overflow-tooltip label="操作" width="200">
         <template slot-scope="scope">
+          <el-button @click="handleEdit(scope.row)" type="text" size="small">修改</el-button>
           <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -48,10 +60,10 @@ export default {
   data() {
     return {
       form: {
-        name: '',
-        begin_time: '',
-        end_time: '',
-        time: '',
+        title:"",
+        publish_start_time:"",
+        publish_end_time:"",
+        time: "",
       },
       page: {
         page_size: 15,
@@ -65,6 +77,18 @@ export default {
     this.geteventlist()
   },
   methods: {
+     changeSwitch(params) {
+      let url = '/article/online/change'
+      let data = {
+        id: params.id
+      }
+      this.$axios.post(url, data).then((res) => {
+        this.$message({
+          message: res.msg,
+          type: 'success'
+        });
+      })
+    },
     search() {
         this.page = {
           page_size: 15,
@@ -78,16 +102,19 @@ export default {
         page_index: 1,
       }
       this.form = {
-        name: '',
-        begin_time: '',
-        end_time: '',
+        title: '',
+        publish_start_time: '',
+        publish_end_time: '',
         time: '',
       }
       this.geteventlist()
     },
     changeDate(data) {
-      this.form.begin_time = data[0].getTime()
-      this.form.end_time = data[0].getTime()
+      this.form.publish_start_time = data[0].getTime()
+      this.form.publish_end_time = data[0].getTime()
+    },
+    handleEdit(){
+      
     },
     handleDelete(row) {
       this.$confirm('是否删除?', '提示', {
@@ -95,7 +122,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let url = '/crm/delete'
+        let url = '/article/delete'
         let data = {
           id: row.id
         }
@@ -109,18 +136,18 @@ export default {
       })
     },
     geteventlist() {
-      let url = '/product/category/list'
+      let url = '/article/list'
       let data = {
         page: {
           page_size:this.page.page_size,
           page_index: this.page.page_index,
         },
-        name: this.form.name,
-        begin_time: this.form.begin_time,
-        end_time: this.form.end_time,
+        title: this.form.title,
+        publish_start_time: this.form.publish_start_time,
+        publish_end_time: this.form.publish_end_time,
       }
       this.$axios.post(url, data).then((res) => {
-        this.tableData = res.data.crms
+        this.tableData = res.data.as
         this.count = res.data.page.total
       })
     },

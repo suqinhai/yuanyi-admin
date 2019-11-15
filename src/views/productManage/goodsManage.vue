@@ -1,11 +1,20 @@
 <template>
   <section class="content">
+    <div class="tools">
+      <el-button style="margin-bottom:10px" type="primary" size="mini" @click="add">新增</el-button>
+    </div>
     <div class="util">
       <div class="tool">
-        <el-input style="width:200px;;margin-bottom:10px" placeholder="请输入姓名" v-model="form.name" size="mini" clearable>
+        <el-input style="width:200px;;margin-bottom:10px" placeholder="请输入商品名称" v-model="form.name" size="mini" clearable>
         </el-input>
-        <el-date-picker v-model="form.time" range-separator="至" size="mini" type="daterange" style="width:405px" start-placeholder="开始日期" end-placeholder="结束日期" @change="changeDate">
-        </el-date-picker>
+        <el-select v-model="form.category_id" size="mini" placeholder="请选择分类">
+          <el-option v-for="item in optionClassify" :key="item.id.toString()" :label="item.name" :value="item.id.toString()">
+          </el-option>
+        </el-select>
+        <el-select v-model="form.states" size="mini" placeholder="请选择状态">
+          <el-option v-for="item in optionStates" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
         <el-button size="mini" @click="search
 " type="primary" style="margin-left:0px">搜索</el-button>
         <el-button size="mini" @click="reset" type="primary" style="margin-left:0">重置</el-button>
@@ -23,18 +32,25 @@
       <el-table-column show-overflow-tooltip prop="category_name" label="类别">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="states" label="状态">
+        <template slot-scope="scope">
+          {{scope.row.states ? '上架': '下架'}}
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="index_show" label="首页推荐">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.index_show" @change="changeIndexShowSwitch(scope.row)">
+          </el-switch>
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="states" label="商品上架">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.states" @change="changeSwitch(scope.row)">
+          <el-switch v-model="scope.row.states" @change="changeStatesSwitch(scope.row)">
           </el-switch>
         </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip label="操作" width="200">
         <template slot-scope="scope">
-          <el-button @click="handleDelete(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
           <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -50,10 +66,9 @@ export default {
   data() {
     return {
       form: {
-        name: '',
-        begin_time: '',
-        end_time: '',
-        time: '',
+        name: "",
+        states: 2,
+        category_id: '',
       },
       page: {
         page_size: 15,
@@ -61,14 +76,48 @@ export default {
       },
       tableData: [],
       count: 0,
+      optionClassify: [],
+      optionStates: [{
+        value: 2,
+        label: '全部',
+      }, {
+        value: 1,
+        label: '上架',
+      }, {
+        value: 0,
+        label: '下架',
+      }]
     }
   },
   created() {
     this.geteventlist()
+    this.getClassifyList()
   },
   methods: {
-    changeSwitch(params) {
-      let url = '/product/category/state'
+    getClassifyList() {
+      let url = '/product/category/tree'
+      this.$axios.post(url).then((res) => {
+        res.data.tree.unshift({
+          id: '',
+          name: '全部'
+        })
+        this.optionClassify = JSON.parse(JSON.stringify(res.data.tree))
+      })
+    },
+    changeIndexShowSwitch(params) {
+      let url = '/product/indexshow/change'
+      let data = {
+        id: params.id
+      }
+      this.$axios.post(url, data).then((res) => {
+        this.$message({
+          message: res.msg,
+          type: 'success'
+        });
+      })
+    },
+    changeStatesSwitch(params){
+      let url = '/product/state/change'
       let data = {
         id: params.id
       }
@@ -80,11 +129,11 @@ export default {
       })
     },
     search() {
-        this.page = {
-          page_size: 15,
-          page_index: 1,
-        }
-        this.geteventlist()
+      this.page = {
+        page_size: 15,
+        page_index: 1,
+      }
+      this.geteventlist()
     },
     reset() {
       this.page = {
@@ -92,10 +141,9 @@ export default {
         page_index: 1,
       }
       this.form = {
-        name: '',
-        begin_time: '',
-        end_time: '',
-        time: '',
+        name: "",
+        states: "",
+        category_id: '',
       }
       this.geteventlist()
     },
@@ -103,13 +151,27 @@ export default {
       this.form.begin_time = data[0].getTime()
       this.form.end_time = data[0].getTime()
     },
+    add(){
+      this.$router.push({
+        path:'/addGoods'
+      })
+    },
+    handleEdit(data){
+      localStorage.setItem("goods", JSON.stringify(data));
+      this.$router.push({
+        path:'/addGoods',
+        query:{
+          id:data.id
+        }
+      })
+    },
     handleDelete(row) {
       this.$confirm('是否删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let url = '/crm/delete'
+        let url = '/product/delete'
         let data = {
           id: row.id
         }
@@ -126,13 +188,18 @@ export default {
       let url = '/product/list'
       let data = {
         page: {
-          page_size:this.page.page_size,
+          page_size: this.page.page_size,
           page_index: this.page.page_index,
         },
         name: this.form.name,
-        states:0,
       }
+      this.form.category_id === '' ?  '' : data['category_id'] = this.form.category_id
+      this.form.states === '' ?  '' : data['states'] = this.form.states
       this.$axios.post(url, data).then((res) => {
+        res.data.ps.forEach((item)=>{
+          item.index_show = item.index_show ? true : false
+          item.states = item.states ? true : false
+        })
         this.tableData = res.data.ps
         this.count = res.data.page.total
       })

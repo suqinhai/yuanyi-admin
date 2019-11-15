@@ -8,8 +8,6 @@
     <el-table :data="tableData" border style="width: 100%" size="mini">
       <el-table-column show-overflow-tooltip prop="id" type="selection" width="55">
       </el-table-column>
-       <el-table-column show-overflow-tooltip prop="id" label="ID">
-      </el-table-column>
       <el-table-column show-overflow-tooltip prop="sort" label="排序">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="name" label="分类名称">
@@ -24,16 +22,10 @@
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="level" label="级别">
       </el-table-column>
-<!--       <el-table-column show-overflow-tooltip prop="level" label="下级分类">
-        <template slot-scope="scope">
-          <span class="el-icon-s-unfold" @click="clickLevel(scope.row)"></span>
-        </template>
-      </el-table-column> -->
       <el-table-column show-overflow-tooltip label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="handleModif(scope.row)" type="text" size="small">修改</el-button>
           <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
-          <el-button @click="clickLevel(scope.row)" type="text" size="small">下级分类</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,13 +58,13 @@ export default {
     return {
       form: {
         name: '',
-        parent_id: 0,
+        parent_id: this.$route.query.parent_id,
         sort: '',
         desc: '',
       },
-      page:{
-        page_size:15,
-        page_index:1
+      page: {
+        page_size: 15,
+        page_index: 1,
       },
       dialogVisible: false,
       tableData: [],
@@ -83,17 +75,9 @@ export default {
     this.geteventlist()
   },
   methods: {
-    clickLevel(data) {
-      this.$router.push({
-        path: '/lowerClassifyList',
-        query:{
-          parent_id: data.id
-        }
-      })
-    },
     handleModif(data){
       this.form = JSON.parse(JSON.stringify(data))
-      this.form.parent_id = 0
+      this.form.parent_id = this.$route.query.parent_id
       this.dialogVisible = true
     },
     handleDelete(row) {
@@ -119,7 +103,6 @@ export default {
       let url
       let data = {
         name: this.form.name,
-        parent_id: this.form.parent_id,
         sort: parseInt(this.form.sort),
         desc: this.form.desc,
       }
@@ -142,7 +125,7 @@ export default {
     add() {
       this.form = {
         name: '',
-        parent_id: 0,
+        parent_id: this.$route.query.parent_id,
         sort: '',
         desc: '',
       }
@@ -154,7 +137,7 @@ export default {
     changeSwitch(params) {
       let url = '/product/category/state'
       let data = {
-        id: params.id,
+        id: params.id
       }
       this.$axios.post(url, data).then((res) => {
         this.$message({
@@ -165,12 +148,12 @@ export default {
     },
     geteventlist() {
       let url = '/product/category/list'
-      let data = {
-        parent_id: this.form.parent_id,
-        page:{
-          page_size: this.page.page_size,
+      let data  = {
+        page: {
+          page_size:this.page.page_size,
           page_index: this.page.page_index,
-        }
+        },
+        parent_id: parseInt(this.form.parent_id),
       }
       this.$axios.post(url,data).then((res) => {
         res.data.pcs.forEach((res) => {

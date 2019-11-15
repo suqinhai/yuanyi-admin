@@ -11,7 +11,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.prototype.$axios = api
 Vue.config.productionTip = false
-
+Vue.prototype.goback = function (){
+  history.back(-1)
+}
 Vue.use(ElementUI);
 
 /* eslint-disable no-new */
