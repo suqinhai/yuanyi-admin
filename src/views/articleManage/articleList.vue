@@ -25,6 +25,12 @@
       <el-table-column show-overflow-tooltip prop="source_url" label="文章来源链接">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="preview" label="文章预览图">
+         <template slot-scope="scope">
+          <el-tooltip placement="top">
+              <div slot="content"><img :src="scope.row.preview" width="200px"></div>
+              <a href="jacascript:;" class="el-icon-picture"></a>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="key_word" label="文章关键字">
       </el-table-column>

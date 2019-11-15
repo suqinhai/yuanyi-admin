@@ -28,6 +28,12 @@
       <el-table-column show-overflow-tooltip prop="name" label="商品名称">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="details_pic_url" label="商品图片">
+        <template slot-scope="scope">
+          <el-tooltip placement="top">
+              <div slot="content"><img :src="scope.row.details_pic_url" width="200px"></div>
+              <a href="jacascript:;" class="el-icon-picture"></a>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="category_name" label="类别">
       </el-table-column>

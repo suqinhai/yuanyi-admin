@@ -109,7 +109,7 @@ export default {
       })
     },
     geteventlist() {
-      let url = '/product/category/list'
+      let url = '/crm/list'
       let data = {
         page: {
           page_size:this.page.page_size,

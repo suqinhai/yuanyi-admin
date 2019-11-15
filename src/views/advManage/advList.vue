@@ -24,6 +24,12 @@
       <el-table-column show-overflow-tooltip prop="slogan" label="广告名称">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="pic_url" label="广告图片">
+        <template slot-scope="scope">
+          <el-tooltip placement="top">
+              <div slot="content"><img :src="scope.row.pic_url" width="200px"></div>
+              <a href="jacascript:;" class="el-icon-picture"></a>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="phone" label="广告位置">
         <template slot-scope="scope">
