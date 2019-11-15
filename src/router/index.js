@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 const Main = () => import('@/views/Common/main')
 const Login = () => import('@/views/Common/login')
+const modifePassword = () => import('@/views/Common/modifePassword')
 const notFound = () => import('@/views/Common/notFound')
 const home_index = () => import('@/views/Home/index')
 
@@ -30,12 +31,14 @@ const set = () => import('@/views/systemManage/set')
 Vue.use(Router)
 
 const vueRouter = new Router({
+  mode: 'history',
   routes: [{
       path: '/login',
       name: 'Login',
       component: Login,
       hidden: true
     },
+
     {
       path: '/',
       name: '客户管理',
@@ -45,7 +48,17 @@ const vueRouter = new Router({
         path: '/clientManage',
         name: '客户列表',
         component: clientManage,
-      }, ]
+      }, {
+        path: '/',
+        name: '客户列表',
+        component: clientManage,
+        hidden: true
+      }, {
+        path: '/modifePassword',
+        name: '修改密码',
+        component: modifePassword,
+        hidden: true
+      }]
     },
     {
       path: '/',
@@ -126,6 +139,18 @@ const vueRouter = new Router({
         path: '/set',
         name: '网站设置',
         component: set,
+      }, ]
+    },
+    {
+      path: '/',
+      name: '',
+      component: Main,
+      iconCls: 'fa fa-gamepad',
+      hidden: true,
+      children: [{
+        path: '/notFound',
+        name: 'notFound',
+        component: notFound,
       }, ]
     },
   ]

@@ -40,7 +40,7 @@ export default {
   created() {
     let userinfo = JSON.parse(window.localStorage.getItem('userinfo'))
     if (userinfo && userinfo.checked) {
-      this.form.username = userinfo.username
+      this.form.username = userinfo.name
       this.form.password = userinfo.password
       this.checked = userinfo.checked
     }

@@ -13,8 +13,8 @@
         <el-dropdown trigger="hover">
           <span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
           <el-dropdown-menu slot="dropdown">
-            <!-- <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item>设置</el-dropdown-item> -->
+            <!-- <el-dropdown-item>我的消息</el-dropdown-item> -->
+            <el-dropdown-item @click.native="goModifePassword">修改密码</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -95,6 +95,11 @@ export default {
     this.getMent()
   },
   methods: {
+    goModifePassword(){
+      this.$router.push({
+        path: '/modifePassword'
+      })
+    },
     getMent(){
       // let url = '/admin/Eenu/treeEenu'
       // this.$axios.get(url).then(res => {

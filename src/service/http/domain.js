@@ -15,7 +15,7 @@ let HOST = process.env.HOST;
 
 // const api_test = 'http://www.forrily.com:8089/'
 const api_test = '/apis/admin/'
-
+const api_prod = '/apis/admin/'
 if ( HOST == 'test' ){
 	apiUrl = api_test
 }else if ( HOST == 'prod' ){
