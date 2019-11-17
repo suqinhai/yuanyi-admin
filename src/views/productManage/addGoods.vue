@@ -13,7 +13,7 @@
             <!--&lt;!&ndash;</el-option>&ndash;&gt;-->
           <!--</el-select>-->
           你选择了： {{cName}}
-          <el-tree :data="categorys" :props="categoryProps" @node-click="selectCategory" render-after-expand="true" highlight-current="true" empty-text="还没商品分类，现在去创建吧！" accordion="true"></el-tree>
+          <el-tree :data="categorys" :props="categoryProps" @node-click="selectCategory" :render-after-expand="true" :highlight-current="true" empty-text="还没商品分类，现在去创建吧！" :accordion="true"></el-tree>
         </el-form-item>
         <el-form-item label="商品名称">
           <el-input v-model="form.name"></el-input>
@@ -24,10 +24,28 @@
         <el-form-item label="商品介绍">
           <el-input v-model="form.intro" type="textarea" :row="3"></el-input>
         </el-form-item>
+        <!--<el-form-item label="商品详情图">-->
+          <!--<el-upload class="upload-demo" :action="'http://upload.qiniup.com/'" :before-upload="beforeAvatarUpload" :on-remove="handleRemove2" :on-preview="handlePreview" :on-success="handleSuccess2" :data="{token: form.qiniuyunToken}" name="file" :limit="20" list-type="picture" :file-list="fileList2">-->
+            <!--<el-button size="small" type="primary">点击上传</el-button>-->
+          <!--</el-upload>-->
+        <!--</el-form-item>-->
         <el-form-item label="商品详情图">
-          <el-upload class="upload-demo" :action="'http://upload.qiniup.com/'" :before-upload="beforeAvatarUpload" :on-remove="handleRemove2" :on-preview="handlePreview" :on-success="handleSuccess2" :data="{token: form.qiniuyunToken}" name="file" :limit="20" list-type="picture" :file-list="fileList2">
-            <el-button size="small" type="primary">点击上传</el-button>
+          <el-upload
+            action="http://upload.qiniup.com/"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove2"
+            :before-upload="beforeAvatarUpload"
+            :file-list="fileList2"
+            :data="{token: form.qiniuyunToken}"
+            :on-success="handleSuccess2"
+            :on-error="testerr"
+          >
+            <i class="el-icon-plus"></i>
           </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
         </el-form-item>
         <el-form-item label="商品售价">
           <el-input v-model="form.price"></el-input>
@@ -51,6 +69,7 @@
 </template>
 <script>
 import domain from '@/service/http/domain.js'
+
 export default {
   data() {
     return {
@@ -90,7 +109,9 @@ export default {
         value: 4,
         label: '新闻'
       }],
-      classifyList:[]
+      classifyList:[],
+      dialogImageUrl: '',
+      dialogVisible: false,
     }
   },
   created() {
@@ -107,6 +128,7 @@ export default {
         price: data.price,
         category_id: data.category_id.toString(),
       }
+      this.cName = data.category_name
       this.fileList = [{
           name: data.cover_url,
           id: data.cover_url,
@@ -123,6 +145,7 @@ export default {
       }
     }
     this.getTree()
+    this.beforeAvatarUpload()
   },
   methods: {
     getTree(){
@@ -145,7 +168,7 @@ export default {
       this.form.end_time = data[0].getTime() / 1000
     },
     changeSwitch() {
-      this.form.index_show = !!!this.form.index_show
+      this.form.index_show = !!this.form.index_show
     },
     async beforeAvatarUpload(file) {
       let url = '/resource/token'
@@ -189,7 +212,7 @@ export default {
       // if(this.form.category_id){
       //   this.form.category_id = parseInt(this.form.category_id)
       // }
-      alert(this.form.category_id)
+
       let url = '/product/new';
       let data = {
         name: this.form.name,
@@ -201,9 +224,8 @@ export default {
         price: this.form.price,
         category_id: this.form.category_id,
       }
-      alert(this.form.id)
       if(this.form.id){
-        url = 'product/modify'
+        url = '/product/modify'
         data['id'] = this.form.id
       }
       this.$axios.post(url, data).then(res => {
@@ -220,6 +242,13 @@ export default {
         this.form.category_id = data.id;
       }
     },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+    },
+    testerr(response, file, fileList){
+      alert(response)
+    }
   }
 }
 

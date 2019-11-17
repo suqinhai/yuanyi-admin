@@ -14,11 +14,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^3.0.1",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.3.8",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "qiniu-js": "^2.5.5",
+    "tinymce": "^5.1.1",
     "vue": "^2.5.2",
     "vue-highcharts": "^0.0.10",
     "vue-router": "^3.0.1"

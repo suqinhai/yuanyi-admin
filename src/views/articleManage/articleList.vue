@@ -1,6 +1,9 @@
 <template>
   <section class="content">
     <div class="util">
+      <div class="tools">
+        <el-button style="margin-bottom:10px" type="primary" size="mini" @click="addArticle">新增</el-button>
+      </div>
       <div class="tool">
         <el-input style="width:200px;;margin-bottom:10px" placeholder="请输入姓名" v-model="form.name" size="mini" clearable>
         </el-input>
@@ -120,7 +123,12 @@ export default {
       this.form.publish_end_time = data[0].getTime()
     },
     handleEdit(){
-      
+
+    },
+    addArticle(){
+      this.$router.push({
+        path:'/addArticle'
+      })
     },
     handleDelete(row) {
       this.$confirm('是否删除?', '提示', {

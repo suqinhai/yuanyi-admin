@@ -15,11 +15,11 @@ const lowerClassifyList = () => import('@/views/productManage/lowerClassifyList'
 const goodsManage = () => import('@/views/productManage/goodsManage')
 const addGoods = () => import('@/views/productManage/addGoods')
 
-
 //文章管理
 const articleClassifyList = () => import('@/views/articleManage/articleClassifyList')
 const articleLowerClassifyList = () => import('@/views/articleManage/articleLowerClassifyList')
 const articleList = () => import('@/views/articleManage/articleList')
+const addArticle = () => import('@/views/articleManage/addAritcle')
 
 //广告管理
 const advList = () => import('@/views/advManage/advList')
@@ -109,6 +109,12 @@ const vueRouter = new Router({
           path: '/articleList',
           name: '文章列表',
           component: articleList,
+        },
+        {
+          path: '/addArticle',
+          name: '文章内容管理',
+          component: addArticle,
+          hidden: true
         },
       ]
     },
