@@ -87,7 +87,7 @@ export default {
     },
     changeDate(data) {
       this.form.begin_time = data[0].getTime()
-      this.form.end_time = data[0].getTime()
+      this.form.end_time = data[1].getTime()
     },
     handleDelete(row) {
       this.$confirm('是否删除?', '提示', {
@@ -116,8 +116,8 @@ export default {
           page_index: this.page.page_index,
         },
         name: this.form.name,
-        begin_time: this.form.begin_time,
-        end_time: this.form.end_time,
+        begin_time: this.form.begin_time/1000,
+        end_time: this.form.end_time/1000,
       }
       this.$axios.post(url, data).then((res) => {
         this.tableData = res.data.crms

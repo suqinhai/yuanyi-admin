@@ -1,8 +1,10 @@
 <template>
   <section class="content">
+    <div class="nav">{{ handleNav() }}</div>
     <div class="util">
       <div class="tool">
         <el-button size="mini" @click="add" type="primary" style="margin-bottom:10px">新增</el-button>
+        <el-button size="mini" @click="back" type="primary" style="margin-bottom:10px">返回上一级</el-button>
       </div>
     </div>
     <el-table :data="tableData" border style="width: 100%" size="mini">
@@ -59,6 +61,8 @@ export default {
       dialogVisible: false,
       tableData: [],
       count:0,
+      pId:[0],
+      nav:[],
     }
   },
   created() {
@@ -66,16 +70,19 @@ export default {
   },
   methods: {
     clickLevel(data) {
-      this.$router.push({
-        path: '/articleLowerClassifyList',
-        query:{
-          parent_id: data.id
-        }
-      })
+      // this.$router.push({
+      //   path: '/articleLowerClassifyList',
+      //   query:{
+      //     parent_id: data.id
+      //   }
+      // })
+      this.pId.push(data.id)
+      this.geteventlist(data.id)
+      this.nav.push(data.type_name)
     },
     handleModif(data){
-      this.form = JSON.parse(JSON.stringify(data))  
-      this.form.parent_id = 0
+      this.form = JSON.parse(JSON.stringify(data))
+      // this.form.parent_id = 0
       this.dialogVisible = true
     },
     handleDelete(row) {
@@ -93,7 +100,7 @@ export default {
             message: res.msg,
             type: 'success'
           });
-          this.geteventlist()
+          this.geteventlist(this.pId[this.pId.length-1])
         })
       })
     },
@@ -101,7 +108,7 @@ export default {
       let url
       let data = {
         type_name: this.form.type_name,
-        parent_id: this.form.parent_id,
+        parent_id: this.pId[this.pId.length-1],
         sort: parseInt(this.form.sort),
       }
       if(this.form.id){
@@ -109,14 +116,14 @@ export default {
         data['id'] = this.form.id
       }else{
         url = '/article/category/new'
-        data['parent_id'] = this.form.parent_id
+        data['parent_id'] = this.pId[this.pId.length-1]
       }
       this.$axios.post(url, data).then((res) => {
         this.$message({
           message: res.msg,
           type: 'success'
         });
-        this.geteventlist()
+        this.geteventlist(this.pId[this.pId.length-1])
         this.dialogVisible = false
       })
     },
@@ -144,19 +151,19 @@ export default {
         });
       })
     },
-    geteventlist() {
+    geteventlist(pId) {
       let url = '/article/category/list'
       let data = {
-        parent_id: this.form.parent_id,
+        parent_id: pId,
         page:{
           page_size: this.page.page_size,
           page_index: this.page.page_index,
         }
       }
       this.$axios.post(url,data).then((res) => {
-        res.data.ats.forEach((res) => {
-          res.states = res.states ? true : false
-        })
+        // res.data.ats.forEach((res) => {
+        //   res.states = res.states ? true : false
+        // })
         this.tableData = res.data.ats
         this.count = res.data.page.total
       })
@@ -168,6 +175,41 @@ export default {
     handleSizeChange(val) {
       this.page.page_size = val
       this.geteventlist()
+    },
+    handleNav: function () {
+      let msg = "";
+      for(let i=0;i<this.nav.length;i++){
+        msg+=this.nav[i];
+        if(i < this.nav.length-1){
+          msg += " / "
+        }
+
+      }
+      return msg;
+    },
+    back(){
+      let iid = this.pId.pop()
+      if (this.tableData[0] !==undefined){
+        iid = this.tableData[0].parent_id
+      }
+      let url = '/article/category/list'
+      let data = {
+        id:  iid,
+        page:{
+          page_size: this.page.page_size,
+          page_index: this.page.page_index,
+        }
+      }
+      this.$axios.post(url,data).then((res) => {
+        if(res.data.ats[0].parent_id === 0){
+          this.geteventlist(0);
+          this.nav.pop();
+          return
+        }
+        this.tableData = res.data.ats
+        this.count = res.data.page.total
+      })
+      this.nav.pop()
     },
   }
 }
@@ -183,5 +225,7 @@ export default {
   padding-top: 15px;
   text-align: right;
 }
-
+.nav{
+  margin-bottom: 15px;
+}
 </style>

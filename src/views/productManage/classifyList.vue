@@ -1,8 +1,10 @@
 <template>
   <section class="content">
+    <div class="nav">{{ handleNav() }}</div>
     <div class="util">
       <div class="tool">
         <el-button size="mini" @click="add" type="primary" style="margin-bottom:10px">新增</el-button>
+        <el-button size="mini" @click="back" type="primary" style="margin-bottom:10px">返回上一级</el-button>
       </div>
     </div>
     <el-table :data="tableData" border style="width: 100%" size="mini">
@@ -77,23 +79,28 @@ export default {
       dialogVisible: false,
       tableData: [],
       count:0,
+      pId:[0],
+      nav:[],
     }
   },
   created() {
-    this.geteventlist()
+    this.getClassifyList(0)
   },
   methods: {
     clickLevel(data) {
-      this.$router.push({
-        path: '/lowerClassifyList',
-        query:{
-          parent_id: data.id
-        }
-      })
+      // this.$router.push({
+      //   path: '/lowerClassifyList',
+      //   query:{
+      //     parent_id: data.id
+      //   }
+      // })
+      this.pId.push(data.id)
+      this.getClassifyList(data.id)
+      this.nav.push(data.name)
     },
     handleModif(data){
       this.form = JSON.parse(JSON.stringify(data))
-      this.form.parent_id = 0
+      this.form.parent_id = data.parent_id
       this.dialogVisible = true
     },
     handleDelete(row) {
@@ -111,15 +118,16 @@ export default {
             message: res.msg,
             type: 'success'
           });
-          this.geteventlist()
+          this.getClassifyList(this.pId[this.pId.length-1])
         })
       })
     },
     save() {
       let url
+      let iid = this.pId[this.pId.length-1]
       let data = {
         name: this.form.name,
-        parent_id: this.form.parent_id,
+        parent_id: iid,
         sort: parseInt(this.form.sort),
         desc: this.form.desc,
       }
@@ -128,14 +136,14 @@ export default {
         data['id'] = this.form.id
       }else{
         url = '/product/category/new'
-        data['parent_id'] = this.form.parent_id
+        data['parent_id'] = iid
       }
       this.$axios.post(url, data).then((res) => {
         this.$message({
           message: res.msg,
           type: 'success'
         });
-        this.geteventlist()
+        this.getClassifyList(iid)
         this.dialogVisible = false
       })
     },
@@ -147,6 +155,30 @@ export default {
         desc: '',
       }
       this.dialogVisible = true
+    },
+    back(){
+      let iid = this.pId.pop()
+      if (this.tableData[0] !==undefined){
+        iid = this.tableData[0].parent_id
+      }
+      let url = '/product/category/list'
+      let data = {
+        id:  iid,
+        page:{
+          page_size: this.page.page_size,
+          page_index: this.page.page_index,
+        }
+      }
+      this.$axios.post(url,data).then((res) => {
+        if(res.data.pcs[0].parent_id === 0){
+          this.getClassifyList(0);
+          this.nav.pop();
+          return
+        }
+        this.tableData = res.data.pcs
+        this.count = res.data.page.total
+      })
+      this.nav.pop()
     },
     handleClose() {
       this.dialogVisible = false
@@ -163,10 +195,10 @@ export default {
         });
       })
     },
-    geteventlist() {
+    getClassifyList(pId) {
       let url = '/product/category/list'
       let data = {
-        parent_id: this.form.parent_id,
+        parent_id: pId,
         page:{
           page_size: this.page.page_size,
           page_index: this.page.page_index,
@@ -188,6 +220,17 @@ export default {
       this.page.page_size = val
       this.geteventlist()
     },
+    handleNav: function () {
+      let msg = "";
+      for(let i=0;i<this.nav.length;i++){
+        msg+=this.nav[i];
+        if(i < this.nav.length-1){
+          msg += " / "
+        }
+
+      }
+      return msg;
+    },
   }
 }
 
@@ -202,5 +245,9 @@ export default {
   padding-top: 15px;
   text-align: right;
 }
+
+  .nav{
+    margin-bottom: 15px;
+  }
 
 </style>

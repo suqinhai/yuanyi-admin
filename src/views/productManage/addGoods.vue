@@ -8,10 +8,12 @@
           </el-upload>
         </el-form-item>
         <el-form-item label="商品分类">
-          <el-select v-model="form.category_id" placeholder="请选择分类">
-            <el-option v-for="item in classifyList" :key="item.id.toString()" :label="item.name" :value="item.id.toString()">
-            </el-option>
-          </el-select>
+          <!--<el-select v-model="form.category_id" placeholder="请选择分类">-->
+            <!--&lt;!&ndash;<el-option v-for="item in classifyList" :key="item.id.toString()" :label="item.name" :value="item.id.toString()">&ndash;&gt;-->
+            <!--&lt;!&ndash;</el-option>&ndash;&gt;-->
+          <!--</el-select>-->
+          你选择了： {{cName}}
+          <el-tree :data="categorys" :props="categoryProps" @node-click="selectCategory" render-after-expand="true" highlight-current="true" empty-text="还没商品分类，现在去创建吧！" accordion="true"></el-tree>
         </el-form-item>
         <el-form-item label="商品名称">
           <el-input v-model="form.name"></el-input>
@@ -43,7 +45,7 @@
           <el-button style="width: 100px;" @click="goback()">取消</el-button>
         </el-form-item>
       </el-form>
-      </el-form>
+      <!--</el-form>-->
     </div>
   </section>
 </template>
@@ -52,6 +54,14 @@ import domain from '@/service/http/domain.js'
 export default {
   data() {
     return {
+      categorys: [
+      ],
+      categoryProps: {
+        children: 'sub',
+        id:"id",
+        label: "name",
+      },
+      cName:"",
       dev: domain,
       fileList: [],
       fileList2: [],
@@ -118,15 +128,16 @@ export default {
     getTree(){
       let url = '/product/category/tree';
       this.$axios.post(url).then(res => {
-        let list = []
-        res.data.tree.forEach((data)=>{
-          if(data.sub){
-            data.sub.forEach((data2)=>{
-              list.push(data2) 
-            })
-          }
-        })
-        this.classifyList = list
+        // let list = []
+        // res.data.tree.forEach((data)=>{
+        //   if(data.sub){
+        //     data.sub.forEach((data2)=>{
+        //       list.push(data2)
+        //     })
+        //   }
+        // })
+        // this.classifyList = list
+        this.categorys = res.data.tree
       });
     },
     changeDate(data) {
@@ -175,9 +186,10 @@ export default {
       this.fileList2.forEach((data)=>{
         details_pic_url.push(data.url)
       })
-      if(this.form.category_id){
-        this.form.category_id = parseInt(this.form.category_id)
-      }
+      // if(this.form.category_id){
+      //   this.form.category_id = parseInt(this.form.category_id)
+      // }
+      alert(this.form.category_id)
       let url = '/product/new';
       let data = {
         name: this.form.name,
@@ -189,6 +201,7 @@ export default {
         price: this.form.price,
         category_id: this.form.category_id,
       }
+      alert(this.form.id)
       if(this.form.id){
         url = 'product/modify'
         data['id'] = this.form.id
@@ -200,6 +213,12 @@ export default {
         });
         this.goback()
       });
+    },
+    selectCategory(data) {
+      if (data.sub === null){
+        this.cName = data.name
+        this.form.category_id = data.id;
+      }
     },
   }
 }
