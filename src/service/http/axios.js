@@ -17,9 +17,9 @@ axiosIns.interceptors.request.use(function(config) {
   //  console.log(config.headers['Content-Type'])
   // if(config.headers['Content-Type']) {
   let contentType = 'application/json'
-  // } 
+  // }
   config.headers['Content-Type'] = contentType
-  // config.headers['Content-Type'] = 
+  // config.headers['Content-Type'] =
   let token = window.localStorage.getItem('token')
   // 把token放到参数里面
   // if (token && config.params) {
@@ -54,7 +54,7 @@ ajaxMethod.forEach((method) => {
   api[method] = function(uri, data, config) {
     return new Promise(function(resolve, reject) {
       axiosIns[method](uri, data, config).then((response) => {
-        if (response.data.code == -1006) {
+        if (response.data.code == -1006 || response.data.code == -1005 ) {
           window.localStorage.removeItem('token');
           router.replace('/login')
           return false
