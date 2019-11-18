@@ -5,7 +5,7 @@
         <el-button style="margin-bottom:10px" type="primary" size="mini" @click="addArticle">新增</el-button>
       </div>
       <div class="tool">
-        <el-input style="width:200px;;margin-bottom:10px" placeholder="请输入姓名" v-model="form.name" size="mini" clearable>
+        <el-input style="width:200px;;margin-bottom:10px" placeholder="请输入标题" v-model="form.title" size="mini" clearable>
         </el-input>
         <el-date-picker v-model="form.time" range-separator="至" size="mini" type="daterange" style="width:405px" start-placeholder="开始日期" end-placeholder="结束日期" @change="changeDate">
         </el-date-picker>
