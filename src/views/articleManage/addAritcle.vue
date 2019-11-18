@@ -114,24 +114,21 @@
           sort:0,
         },
         init: {
-          language_url: '/static/zh_CN.js',  //public目录下
+          language_url: '/static/zh_CN.js',
           language: 'zh_CN',
-          skin_url: '/static/tinymce/skins/ui/oxide', //public目录下
+          skin_url: '/static/tinymce/skins/ui/oxide',
           height: 400,
           plugins: this.plugins,  // 父组件传入 或者 填写个默认的插件 要选用什么插件都可以 去官网可以查到
           toolbar: this.toolbar,  // 工具栏 我用到的也就是lists image media table wordcount 这些 根据需求而定
-          images_upload_url: '', //上传路径
-          // 此处为图片上传处理函数，这个直接用了base64的图片形式上传图片，
+          // images_upload_url: 'http://upload.qiniup.com/', //上传路径
           // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
 
           // 官网抄的图片上传 项目如果用了vue-resource可以用$http 因为比较懒就没改
-          images_upload_handler: (blobInfo, success, failure) => {
-
+          images_upload_handler: (blobInfo, success, failure)=> {
             var xhr, formData;
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST', `${config.webPath}` + "basic/upload/");
-
+            xhr.open('POST', 'http://upload.qiniup.com/');
             xhr.onload = function() {
               var json;
               if (xhr.status != 200) {
@@ -139,19 +136,17 @@
                 return;
               }
               json = JSON.parse(xhr.responseText);
-
-              // if (!json || typeof json.img_url != 'string') {
-              //   failure('Invalid JSON: ' + xhr.responseText);
-              //   return;
-              // }
-              console.log(json)
-              success(json.img_url);
+              if (!json || typeof json.key != 'string') {
+                failure('Invalid JSON: ' + xhr.responseText);
+                return;
+              }
+              success("http://forrily.com/"+json.key);
             };
-
+            this.beforeAvatarUpload()
             formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
-            console.log('formData', formData)
-
+            formData.append('key',  this.uuid());
+            formData.append('token',this.form.qiniuyunToken);
             xhr.send(formData);
           }
         },
@@ -160,7 +155,9 @@
     },
     mounted () {
       // 富文本初始化
-      tinymce.init({})
+      tinymce.init({
+
+      })
     },
     created(){
       if(this.form.id){
@@ -254,8 +251,14 @@
           });
           this.goback()
         });
-
-      }
+      },
+      uuid(){
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        })
+       },
     },
     watch: {
       value (newValue) {
