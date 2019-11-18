@@ -100,6 +100,7 @@
         },
         cName:"",
         form:{
+          id: this.$route.query.id,
           type_id:0,
           title:'',
           author:'',
@@ -162,6 +163,29 @@
       tinymce.init({})
     },
     created(){
+      if(this.form.id){
+        let data = JSON.parse(localStorage.getItem("articles"))
+        this.form = {
+          id: this.form.id,
+          type_id:data.type_id,
+          title:data.title,
+          author:data.author,
+          source:data.source,
+          source_url:data.source_url,
+          key_word:data.key_word,
+          summary:data.summary,
+          states:data.states?true:false,
+          sort:data.sort,
+        }
+
+        this.myValue = data.content
+        this.fileList = [{
+          name: data.preview,
+          id: data.preview,
+          url: data.preview,
+        }]
+
+      }
       this.getTree()
       this.beforeAvatarUpload()
     },
@@ -216,7 +240,7 @@
           key_word:this.form.key_word,
           summary:this.form.summary,
           content:this.myValue,
-          states:this.form.states,
+          states:this.form.states?1:0,
           sort:this.form.sort,
         }
         if(this.form.id){

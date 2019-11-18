@@ -122,8 +122,14 @@ export default {
       this.form.publish_start_time = data[0].getTime()
       this.form.publish_end_time = data[0].getTime()
     },
-    handleEdit(){
-
+    handleEdit(data){
+      localStorage.setItem("articles", JSON.stringify(data));
+      this.$router.push({
+        path:'/addArticle',
+        query:{
+          id:data.id
+        }
+      })
     },
     addArticle(){
       this.$router.push({
@@ -161,6 +167,9 @@ export default {
         publish_end_time: this.form.publish_end_time,
       }
       this.$axios.post(url, data).then((res) => {
+        res.data.as.forEach((item)=>{
+          item.states = item.states ? true : false
+        })
         this.tableData = res.data.as
         this.count = res.data.page.total
       })
