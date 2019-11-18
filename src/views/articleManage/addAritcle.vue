@@ -181,7 +181,7 @@
           id: data.preview,
           url: data.preview,
         }]
-
+        this.cName = data.type_name
       }
       this.getTree()
       this.beforeAvatarUpload()
@@ -199,7 +199,7 @@
       selectCategory(data) {
         if (data.sub_article_type === null){
           this.cName = data.type_name
-          this.form.category_id = data.id;
+          this.form.type_id = data.id;
         }
       },
       async beforeAvatarUpload(file) {
