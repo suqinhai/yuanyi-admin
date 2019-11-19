@@ -152,16 +152,16 @@ const vueRouter = new Router({
         name: "网站设置",
         component: set
       }, {
-        path: "/business/parterList",
+        path: "/businessParterList",
         name: "商业合作伙伴",
         component: businessPartnersList
       }, {
-        path: "/business/addParter",
+        path: "/businessAddParter",
         name: "新增合作商",
         component: addBusinessPartner,
         hidden: true
       }, {
-        path: "/business/editPartner",
+        path: "/businessEditPartner",
         name: "编辑合作商",
         component: editBusinessPartner,
         hidden: true
