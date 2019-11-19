@@ -55,6 +55,7 @@ export default {
          id: data.logo,
          url: data.logo,
        }
+       this.beforeAvatarUpload()
   },
   methods: {
     async beforeAvatarUpload(file) {
