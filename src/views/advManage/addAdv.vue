@@ -38,7 +38,6 @@
           <el-button style="width: 100px;" @click="goback()">取消</el-button>
         </el-form-item>
       </el-form>
-      </el-form>
     </div>
   </section>
 </template>
@@ -97,6 +96,8 @@ export default {
           id: data.pic_url,
           url: data.pic_url,
       }]
+
+      this.beforeAvatarUpload()
     }
   },
   methods: {
