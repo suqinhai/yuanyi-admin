@@ -212,6 +212,10 @@ export default {
       // if(this.form.category_id){
       //   this.form.category_id = parseInt(this.form.category_id)
       // }
+      if(undefined===this.fileList[0]){
+        this.$message.error('商品封面 必须上传');
+        return
+      }
 
       let url = '/product/new';
       let data = {
@@ -227,6 +231,11 @@ export default {
       if(this.form.id){
         url = '/product/modify'
         data['id'] = this.form.id
+      }else{
+        if (this.isEmpty(data.name)) {
+          this.$message.error('商品名称必须填写');
+          return
+        }
       }
       this.$axios.post(url, data).then(res => {
         this.$message({
@@ -248,6 +257,13 @@ export default {
     },
     testerr(response, file, fileList){
       alert(response)
+    },
+    isEmpty(obj){
+      if(typeof obj == "undefined" || obj == null || obj == ""){
+        return true;
+      }else{
+        return false;
+      }
     }
   }
 }

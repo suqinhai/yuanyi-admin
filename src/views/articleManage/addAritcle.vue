@@ -227,6 +227,12 @@
       },
       onSubmit(){
         let url = '/article/new';
+
+        if(undefined===this.fileList[0]){
+          this.$message.error('文章预览图 必须上传');
+          return
+        }
+
         let data = {
           type_id:this.form.type_id,
           title:this.form.title,
