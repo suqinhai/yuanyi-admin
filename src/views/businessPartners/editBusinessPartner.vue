@@ -92,7 +92,7 @@ export default {
         logo:logoUrl,
         business_name:this.form.business_name,
         intro:this.form.intro,
-        sort:this.form.sort
+        sort:parseInt(this.form.sort)
       }
       this.$axios.post(url, data).then(res => {
         this.$message({
