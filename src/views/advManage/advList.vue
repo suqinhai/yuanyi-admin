@@ -108,7 +108,7 @@ export default {
   methods: {
     add() {
       this.$router.push({
-        path: '/Y2019moc.rgaykcul/addAdv'
+        path: '/addAdv'
       })
     },
     changeSwitch(params) {
@@ -170,7 +170,7 @@ export default {
     handleEdit(data) {
       localStorage.setItem("ad", JSON.stringify(data));
       this.$router.push({
-        path:'/Y2019moc.rgaykcul/addAdv',
+        path:'/addAdv',
         query:{
           id:data.id
         }

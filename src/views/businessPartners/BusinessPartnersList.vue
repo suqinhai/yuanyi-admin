@@ -79,13 +79,13 @@
       },
       add(){
         this.$router.push({
-          path:'/Y2019moc.rgaykcul/businessAddParter'
+          path:'/businessAddParter'
         })
       },
       edit(data){
         localStorage.setItem("partner", JSON.stringify(data));
         this.$router.push({
-          path:'/Y2019moc.rgaykcul/businessEditPartner',
+          path:'/businessEditPartner',
           query:{
             id:data.id
           }

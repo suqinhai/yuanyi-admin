@@ -39,56 +39,56 @@ Vue.use(Router);
 const vueRouter = new Router({
   mode: "history",
   routes: [{
-    path: "/Y2019moc.rgaykcul/login",
+    path: "/login",
     name: "Login",
     component: Login,
     hidden: true
   },
 
     {
-      path: "/Y2019moc.rgaykcul",
+      path: "/",
       name: "客户管理",
       component: Main,
       iconCls: "fa fa-gamepad",
       children: [{
-        path: "/Y2019moc.rgaykcul",
+        path: "/clientManage",
         name: "客户列表",
         component: clientManage
       }, {
-        path: "/Y2019moc.rgaykcul/clientManage",
+        path: "/",
         name: "客户列表",
         component: clientManage,
         hidden: true
       }, {
-        path: "/Y2019moc.rgaykcul/modifePassword",
+        path: "/modifePassword",
         name: "修改密码",
         component: modifePassword,
         hidden: true
       }]
     },
     {
-      path: "/Y2019moc.rgaykcul",
+      path: "/",
       name: "产品管理",
       component: Main,
       iconCls: "fa fa-gamepad",
       children: [{
-        path: "/Y2019moc.rgaykcul/classifyList",
+        path: "/classifyList",
         name: "分类管理",
         component: classifyList
       },
         {
-          path: "/Y2019moc.rgaykcul/lowerClassifyList",
+          path: "/lowerClassifyList",
           name: "下级分类",
           component: lowerClassifyList,
           hidden: true
         },
         {
-          path: "/Y2019moc.rgaykcul/goodsManage",
+          path: "/goodsManage",
           name: "商品管理",
           component: goodsManage
         },
         {
-          path: "/Y2019moc.rgaykcul/addGoods",
+          path: "/addGoods",
           name: "新增商品",
           component: addGoods,
           hidden: true
@@ -96,28 +96,28 @@ const vueRouter = new Router({
       ]
     },
     {
-      path: "/Y2019moc.rgaykcul",
+      path: "/",
       name: "文章管理",
       component: Main,
       iconCls: "fa fa-gamepad",
       children: [{
-        path: "/Y2019moc.rgaykcul/articleClassifyList",
+        path: "/articleClassifyList",
         name: "文章分类",
         component: articleClassifyList
       },
         {
-          path: "/Y2019moc.rgaykcul/articleLowerClassifyList",
+          path: "/articleLowerClassifyList",
           name: "文章下级分类",
           component: articleLowerClassifyList,
           hidden: true
         },
         {
-          path: "/Y2019moc.rgaykcul/articleList",
+          path: "/articleList",
           name: "文章列表",
           component: articleList
         },
         {
-          path: "/Y2019moc.rgaykcul/addArticle",
+          path: "/addArticle",
           name: "文章内容管理",
           component: addArticle,
           hidden: true
@@ -125,17 +125,17 @@ const vueRouter = new Router({
       ]
     },
     {
-      path: "/Y2019moc.rgaykcul",
+      path: "/",
       name: "广告管理",
       component: Main,
       iconCls: "fa fa-gamepad",
       children: [{
-        path: "/Y2019moc.rgaykcul/advList",
+        path: "/advList",
         name: "广告列表",
         component: advList
       },
         {
-          path: "/Y2019moc.rgaykcul/addAdv",
+          path: "/addAdv",
           name: "新增广告",
           component: addAdv,
           hidden: true
@@ -143,25 +143,25 @@ const vueRouter = new Router({
       ]
     },
     {
-      path: "/Y2019moc.rgaykcul",
+      path: "/",
       name: "系统设置",
       component: Main,
       iconCls: "fa fa-gamepad",
       children: [{
-        path: "/Y2019moc.rgaykcul/set",
+        path: "/set",
         name: "网站设置",
         component: set
       }, {
-        path: "/Y2019moc.rgaykcul/businessParterList",
+        path: "/businessParterList",
         name: "商业合作伙伴",
         component: businessPartnersList
       }, {
-        path: "/Y2019moc.rgaykcul/businessAddParter",
+        path: "/businessAddParter",
         name: "新增合作商",
         component: addBusinessPartner,
         hidden: true
       }, {
-        path: "/Y2019moc.rgaykcul/businessEditPartner",
+        path: "/businessEditPartner",
         name: "编辑合作商",
         component: editBusinessPartner,
         hidden: true
@@ -169,13 +169,13 @@ const vueRouter = new Router({
       ]
     },
     {
-      path: "/Y2019moc.rgaykcul",
+      path: "/",
       name: "",
       component: Main,
       iconCls: "fa fa-gamepad",
       hidden: true,
       children: [{
-        path: "/Y2019moc.rgaykcul/notFound",
+        path: "/notFound",
         name: "notFound",
         component: notFound
       }]

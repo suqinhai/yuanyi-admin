@@ -97,7 +97,7 @@ export default {
   methods: {
     goModifePassword(){
       this.$router.push({
-        path: '/Y2019moc.rgaykcul/modifePassword'
+        path: '/modifePassword'
       })
     },
     getMent(){
@@ -122,7 +122,7 @@ export default {
       var _this = this;
       this.$confirm('确认退出吗?', '提示', {}).then(() => {
         window.localStorage.removeItem('token');
-        _this.$router.push('/Y2019moc.rgaykcul/login');
+        _this.$router.push('/login');
       }).catch(() => {
 
       });
@@ -228,7 +228,7 @@ export default {
           line-height: 50px;
          // border-left: 3px solid #222d32;
           min-width: 60px;
-
+          
           i {
             margin-right: 10px;
             vertical-align: middle;

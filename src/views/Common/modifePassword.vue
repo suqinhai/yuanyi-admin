@@ -30,14 +30,14 @@ export default {
     }
   },
   created() {
-
+  
   },
   methods: {
     /**
      * 保存
      */
     onSubmit() {
-      let url = '/Y2019moc.rgaykcul/modify/password';
+      let url = '/modify/password';
       let data = {
         password: this.form.password,
       }
@@ -55,7 +55,7 @@ export default {
         });
         window.localStorage.removeItem('token');
         this.$router.push({
-          path:'/Y2019moc.rgaykcul/login'
+          path:'/login'
         })
       });
     },
