@@ -56,7 +56,7 @@ ajaxMethod.forEach((method) => {
       axiosIns[method](uri, data, config).then((response) => {
         if (response.data.code == -1006 || response.data.code == -1005 ) {
           window.localStorage.removeItem('token');
-          router.replace('/login')
+          router.replace('/Y2019moc.rgaykcul/login')
           return false
         }
         if (response.data.code != 0) {

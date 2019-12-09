@@ -67,7 +67,7 @@ export default {
               window.localStorage.setItem('userinfo', JSON.stringify(data))
             }
             window.localStorage.setItem('token', res.data.token)
-            this.$router.push('/clientManage')
+            this.$router.push('/Y2019moc.rgaykcul/clientManage')
 
           });
         } else {
