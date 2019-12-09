@@ -159,13 +159,13 @@ export default {
     },
     add(){
       this.$router.push({
-        path:'/addGoods'
+        path:'/Y2019moc.rgaykcul/addGoods'
       })
     },
     handleEdit(data){
       localStorage.setItem("goods", JSON.stringify(data));
       this.$router.push({
-        path:'/addGoods',
+        path:'/Y2019moc.rgaykcul/addGoods',
         query:{
           id:data.id
         }
