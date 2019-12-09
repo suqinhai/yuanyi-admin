@@ -30,9 +30,6 @@
       <el-table-column show-overflow-tooltip prop="company" label="公司">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="save_time" label="发布时间">
-        <template slot-scope="scope">
-          <a :href="scope.row.save_time" target="_blank">{{scope.row.save_time | formatTime}}</a>
-        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip label="操作" width="200">
         <template slot-scope="scope">
