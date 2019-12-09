@@ -41,7 +41,9 @@
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="message" label="时间">
         <template slot-scope="scope">
-          {{scope.row.start_time + '至' + scope.row.end_time}}
+          <span>{{scope.row.start_time | formatTime}}</span>
+          <span>至</span>
+          <span>{{scope.row.end_time | formatTime}}</span>
         </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="state" label="上线/下线">
@@ -73,7 +75,7 @@ export default {
     return {
       form: {
         slogan: '',
-        begin_time: '',
+        start_time: '',
         end_time: '',
         time: '',
         postion_id: 0,
@@ -137,7 +139,7 @@ export default {
       }
       this.form = {
         slogan: '',
-        begin_time: '',
+        start_time: '',
         end_time: '',
         time: '',
         postion_id: 0,
@@ -145,8 +147,8 @@ export default {
       this.geteventlist()
     },
     changeDate(data) {
-      this.form.begin_time = data[0].getTime() / 1000
-      this.form.end_time = data[0].getTime() / 1000
+      this.form.start_time = data[0].getTime() / 1000
+      this.form.end_time = data[1].getTime() / 1000
     },
     handleDelete(row) {
       this.$confirm('是否删除?', '提示', {

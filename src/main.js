@@ -8,6 +8,7 @@ import api from './service/http/axios'
 import qs from 'qs'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './filter'
 
 Vue.prototype.$axios = api
 Vue.config.productionTip = false

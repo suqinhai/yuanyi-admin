@@ -13,7 +13,7 @@
             </div>
           </el-col>
 
-          <el-col :span="8" v-for="item in bps" style="margin-top: 15px">
+          <el-col :span="8" v-for="(item,index) in bps" style="margin-top: 15px" :key="index">
             <div class="grid-content item">
               <div style="position: relative">
                 <img  class="img-logo"  v-bind:src="item.logo">
