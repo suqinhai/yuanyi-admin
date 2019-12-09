@@ -28,7 +28,6 @@ const addAdv = () => import("@/views/advManage/addAdv");
 
 //系统设置
 const set = () => import("@/views/systemManage/set");
-const HotelModify = () => import("@/HotelModify");
 
 
 //企业合作伙伴
