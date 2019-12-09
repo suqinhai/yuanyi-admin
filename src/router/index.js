@@ -38,7 +38,6 @@ const editBusinessPartner = () => import("@/views/businessPartners/editBusinessP
 Vue.use(Router);
 
 const vueRouter = new Router({
-  mode: "history",
   routes: [{
     path: "/login",
     name: "Login",
@@ -170,9 +169,9 @@ const vueRouter = new Router({
       ]
     },
     {
-      path: "/HotelModify",
+      path: "/set",
       name: "系统设置",
-      component: HotelModify,
+      component: set,
       iconCls: "fa fa-gamepad",
       children: [
       ]
