@@ -28,6 +28,8 @@ const addAdv = () => import("@/views/advManage/addAdv");
 
 //系统设置
 const set = () => import("@/views/systemManage/set");
+const HotelModify = () => import("@/HotelModify");
+
 
 //企业合作伙伴
 const businessPartnersList = () => import("@/views/businessPartners/BusinessPartnersList");
@@ -168,6 +170,15 @@ const vueRouter = new Router({
       }
       ]
     },
+    {
+      path: "/HotelModify",
+      name: "系统设置",
+      component: HotelModify,
+      iconCls: "fa fa-gamepad",
+      children: [
+      ]
+    },
+
     {
       path: "/",
       name: "",

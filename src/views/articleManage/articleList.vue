@@ -42,6 +42,9 @@
       <el-table-column show-overflow-tooltip prop="clicks" label="浏览量">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="save_time" label="发布时间">
+        <template slot-scope="scope">
+          <a :href="scope.row.save_time" target="_blank">{{scope.row.save_time | formatTime}}</a>
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="sort" label="排序">
       </el-table-column>
@@ -120,7 +123,7 @@ export default {
     },
     changeDate(data) {
       this.form.publish_start_time = data[0].getTime()
-      this.form.publish_end_time = data[0].getTime()
+      this.form.publish_end_time = data[1].getTime()
     },
     handleEdit(data){
       localStorage.setItem("articles", JSON.stringify(data));
