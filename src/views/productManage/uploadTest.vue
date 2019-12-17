@@ -3,7 +3,7 @@
   <el-form ref="form" :model="form" label-width="120px">
   <el-form-item label="展示图" prop="picture" style="width: 800px;">
     <el-upload
-      action="http://up-z2.qiniup.com/"
+      :action="apiQiniuyunUpload"
       list-type="picture-card"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"

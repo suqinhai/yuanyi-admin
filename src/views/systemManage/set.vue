@@ -10,12 +10,12 @@
           <el-input v-model="form.url"></el-input>
         </el-form-item>
         <el-form-item label="网站logo(长方形)：">
-          <el-upload class="upload-demo" :action="'http://up-z2.qiniup.com/'" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
+          <el-upload class="upload-demo" :action="apiQiniuyunUpload" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
         <el-form-item label="网站logo（正方形）：">
-          <el-upload class="upload-demo" :action="'http://up-z2.qiniup.com/'" :before-upload="beforeAvatarUpload2" :on-remove="handleRemove2" :on-preview="handlePreview2" :on-success="handleSuccess2" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList2">
+          <el-upload class="upload-demo" :action="apiQiniuyunUpload" :before-upload="beforeAvatarUpload2" :on-remove="handleRemove2" :on-preview="handlePreview2" :on-success="handleSuccess2" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList2">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -46,7 +46,7 @@
   </section>
 </template>
 <script>
-import domain from '@/service/http/domain.js'
+import {domain} from '@/service/http/domain.js'
 export default {
   data() {
     return {

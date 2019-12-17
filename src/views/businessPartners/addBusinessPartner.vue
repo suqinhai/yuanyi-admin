@@ -3,7 +3,7 @@
     <div class="content">
       <el-form ref="form" :model="form" label-width="120px">
         <el-form-item label="*logo:">
-          <el-upload class="upload-demo" :action="'http://up-z2.qiniup.com/'" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
+          <el-upload class="upload-demo" :action="apiQiniuyunUpload" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -25,7 +25,7 @@
   </section>
 </template>
 <script>
-import domain from '@/service/http/domain.js'
+import {domain} from '@/service/http/domain.js'
 export default {
   data() {
     return {

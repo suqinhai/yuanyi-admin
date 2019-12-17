@@ -7,10 +7,14 @@ import router from './router'
 import api from './service/http/axios'
 import qs from 'qs'
 import ElementUI from 'element-ui'
+import { domain, apiQiniuyunUpload } from './service/http/domain'
 import 'element-ui/lib/theme-chalk/index.css'
 import './filter'
 
 Vue.prototype.$axios = api
+Vue.prototype.domain = domain
+Vue.prototype.apiQiniuyunUpload = apiQiniuyunUpload
+
 Vue.config.productionTip = false
 Vue.prototype.goback = function (){
   history.back(-1)

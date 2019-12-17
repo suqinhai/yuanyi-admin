@@ -1,9 +1,9 @@
-
-
 /**
-** 设置API接口域名
-**/
-let apiUrl = '';
+ ** 设置API接口域名
+ **/
+let domain = '';  // 测试接口域名
+let apiQiniuyunUpload = '' // 七牛云上传域名
+
 let HOST = process.env.HOST;
 
 // const api_test = 'http://niukou.api.chengmikeji.com'
@@ -14,14 +14,23 @@ let HOST = process.env.HOST;
 // 
 
 // const api_test = 'http://www.forrily.com:8089/'
-const api_test = '/apis/admin/'
-const api_prod = '/apis/admin/'
-if ( HOST == 'test' ){
-	apiUrl = api_test
-}else if ( HOST == 'prod' ){
-	apiUrl = api_prod
-}else{
-	apiUrl = api_test
+
+
+
+// 测试配置
+if (process.env.NODE_ENV == 'development') {
+	 domain = '/apis/admin'
+	 apiQiniuyunUpload = 'http://upload.qiniup.com'
+}
+// 正式配置
+if (process.env.NODE_ENV === 'production') {
+	domain = 'localhost:8089'
+	// domain = 'http://www.luckyagr.com:8089'
+	apiQiniuyunUpload = 'http://up-z2.qiniup.com'
 }
 
-export default apiUrl
+console.log(apiQiniuyunUpload)
+export  {
+	domain,
+	apiQiniuyunUpload
+}

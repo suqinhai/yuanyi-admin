@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 import axios from 'axios'
 import qs from 'qs'
 import router from '../../router/index.js'
-import domain from './domain.js'
+import {domain} from './domain.js'
 let axiosIns = axios.create({});
 
 axiosIns.defaults.baseURL = domain

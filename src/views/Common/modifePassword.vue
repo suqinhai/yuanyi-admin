@@ -18,7 +18,7 @@
   </section>
 </template>
 <script>
-import domain from '@/service/http/domain.js'
+import {domain} from '@/service/http/domain.js'
 export default {
   data() {
     return {
