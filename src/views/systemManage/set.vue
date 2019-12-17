@@ -82,7 +82,7 @@ export default {
       this.fileList.push({
         name: key,
         id: key,
-        url: 'http://forrily.com/' + key
+        url: this.qinniuyunImgDomain + key
       })
     },
     handleRemove(file, fileList) {
@@ -102,7 +102,7 @@ export default {
       this.fileList2.push({
         name: key,
         id: key,
-        url: 'http://forrily.com/' + key
+        url: this.qinniuyunImgDomain + key
       })
     },
     handleRemove2(file, fileList) {

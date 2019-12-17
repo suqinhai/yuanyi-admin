@@ -140,7 +140,7 @@
                 failure('Invalid JSON: ' + xhr.responseText);
                 return;
               }
-              success("http://forrily.com/"+json.key);
+              success(this.qinniuyunImgDomain+json.key);
             };
             this.beforeAvatarUpload()
             formData = new FormData();
@@ -213,7 +213,7 @@
         this.fileList.push({
           name: key,
           id: key,
-          url: 'http://forrily.com/' + key
+          url: this.qinniuyunImgDomain + key
         })
       },
       handleRemove(file, fileList) {

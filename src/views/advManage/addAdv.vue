@@ -119,7 +119,7 @@ export default {
       this.fileList.push({
         name: key,
         id: key,
-        url: 'http://forrily.com/' + key
+        url: this.qinniuyunImgDomain + key
       })
     },
     handleRemove(file, fileList) {

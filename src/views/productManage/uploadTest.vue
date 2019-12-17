@@ -88,7 +88,7 @@
         this.fileList.push({
           name: key,
           id: key,
-          url: 'http://forrily.com/' + key
+          url: this.qinniuyunImgDomain + key
         })
       },
       msg(){
