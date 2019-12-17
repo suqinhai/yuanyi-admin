@@ -35,5 +35,6 @@ if (process.env.NODE_ENV === 'production') {
 console.log(apiQiniuyunUpload)
 export  {
 	domain,
-	apiQiniuyunUpload
+	apiQiniuyunUpload,
+	qinniuyunImgDomain
 }
