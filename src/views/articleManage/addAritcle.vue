@@ -18,7 +18,7 @@
         <el-input v-model="form.source_url"></el-input>
       </el-form-item>
       <el-form-item label="*文章预览图">
-        <el-upload class="upload-demo" :action="'http://upload.qiniup.com/'" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
+        <el-upload class="upload-demo" :action="'http://up-z2.qiniup.com/'" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </el-form-item>
@@ -120,7 +120,7 @@
           height: 400,
           plugins: this.plugins,  // 父组件传入 或者 填写个默认的插件 要选用什么插件都可以 去官网可以查到
           toolbar: this.toolbar,  // 工具栏 我用到的也就是lists image media table wordcount 这些 根据需求而定
-          // images_upload_url: 'http://upload.qiniup.com/', //上传路径
+          // images_upload_url: 'http://up-z2.qiniup.com/', //上传路径
           // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
 
           // 官网抄的图片上传 项目如果用了vue-resource可以用$http 因为比较懒就没改
@@ -128,7 +128,7 @@
             var xhr, formData;
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST', 'http://upload.qiniup.com/');
+            xhr.open('POST', 'http://up-z2.qiniup.com/');
             xhr.onload = function() {
               var json;
               if (xhr.status != 200) {

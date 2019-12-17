@@ -168,14 +168,6 @@ const vueRouter = new Router({
       }
       ]
     },
-    {
-      path: "/set",
-      name: "系统设置",
-      component: set,
-      iconCls: "fa fa-gamepad",
-      children: [
-      ]
-    },
 
     {
       path: "/",
