@@ -26,8 +26,8 @@ if (process.env.NODE_ENV == 'development') {
 }
 // 正式配置
 if (process.env.NODE_ENV === 'production') {
-	domain = 'localhost:8089'
-	// domain = 'http://www.luckyagr.com:8089'
+	// domain = 'http://www.luckyagr.com:8089/admin'
+	domain = '/apis/admin'
 	apiQiniuyunUpload = 'http://up-z2.qiniup.com'
 	qinniuyunImgDomain = 'http://pic.luckyagr.com'
 }
