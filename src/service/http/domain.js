@@ -29,10 +29,9 @@ if (process.env.NODE_ENV === 'production') {
 	// domain = 'http://www.luckyagr.com:8089/admin'
 	domain = '/apis/admin'
 	apiQiniuyunUpload = 'http://up-z2.qiniup.com'
-	qinniuyunImgDomain = 'http://pic.luckyagr.com'
+	qinniuyunImgDomain = 'http://pic.luckyagr.com/'
 }
 
-console.log(apiQiniuyunUpload)
 export  {
 	domain,
 	apiQiniuyunUpload,
