@@ -114,9 +114,9 @@
           sort:0,
         },
         init: {
-          language_url: '/static/zh_CN.js',
+          language_url: process.env.NODE_ENV === 'production' ? '/moc@rgaykcul/static/zh_CN.js' : '/static/zh_CN.js',
           language: 'zh_CN',
-          skin_url: '/static/tinymce/skins/ui/oxide',
+          skin_url: process.env.NODE_ENV === 'production' ? '/moc@rgaykcul/static/tinymce/skins/ui/oxide' : '/static/tinymce/skins/ui/oxide',
           height: 400,
           plugins: this.plugins,  // 父组件传入 或者 填写个默认的插件 要选用什么插件都可以 去官网可以查到
           toolbar: this.toolbar,  // 工具栏 我用到的也就是lists image media table wordcount 这些 根据需求而定
