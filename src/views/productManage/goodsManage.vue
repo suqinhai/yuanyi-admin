@@ -27,11 +27,11 @@
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="name" label="商品名称">
       </el-table-column>
-      <el-table-column show-overflow-tooltip prop="details_pic_url" label="商品图片">
+      <el-table-column show-overflow-tooltip prop="cover_url" label="商品图片">
         <template slot-scope="scope">
-          <el-tooltip placement="top">
-              <div slot="content"><img :src="scope.row.details_pic_url" width="200px"></div>
-              <a href="jacascript:;" class="el-icon-picture"></a>
+           <el-tooltip placement="top">
+              <div slot="content"><img :src="scope.row.cover_url" width="200px"></div>
+              <img :src="scope.row.cover_url" width="40px" class="el-icon-picture">
           </el-tooltip>
         </template>
       </el-table-column>

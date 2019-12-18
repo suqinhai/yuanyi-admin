@@ -125,10 +125,11 @@
 
           // 官网抄的图片上传 项目如果用了vue-resource可以用$http 因为比较懒就没改
           images_upload_handler: (blobInfo, success, failure)=> {
+            let that = this
             var xhr, formData;
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST', apiQiniuyunUpload);
+            xhr.open('POST', this.apiQiniuyunUpload);
             xhr.onload = function() {
               var json;
               if (xhr.status != 200) {
@@ -140,7 +141,7 @@
                 failure('Invalid JSON: ' + xhr.responseText);
                 return;
               }
-              success(this.qinniuyunImgDomain+json.key);
+              success(that.qinniuyunImgDomain+json.key);
             };
             this.beforeAvatarUpload()
             formData = new FormData();

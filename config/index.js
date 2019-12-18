@@ -19,7 +19,15 @@ module.exports = {
             }              
         },
     },
-
+    // proxyTable: {
+    //     '/apis': {    //将www.exaple.com印射为/apis
+    //         target: 'http://www.luckyagr.com:8089/',  // 接口域名
+    //         changeOrigin: true,  //是否跨域
+    //         pathRewrite: {
+    //             '^/apis': ''   //需要rewrite的,
+    //         }              
+    //     },
+    // },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
