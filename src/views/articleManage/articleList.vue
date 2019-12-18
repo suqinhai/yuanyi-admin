@@ -169,6 +169,12 @@ export default {
         publish_start_time: this.form.publish_start_time,
         publish_end_time: this.form.publish_end_time,
       }
+      if (data.publish_start_time === "") {
+          data.publish_start_time = 0
+      }
+        if (data.publish_end_time === "") {
+            data.publish_end_time = 0
+        }
       this.$axios.post(url, data).then((res) => {
         res.data.as.forEach((item)=>{
           item.states = item.states ? true : false
