@@ -212,10 +212,31 @@ export default {
       // if(this.form.category_id){
       //   this.form.category_id = parseInt(this.form.category_id)
       // }
-      if(undefined===this.fileList[0]){
-        this.$message.error('商品封面 必须上传');
+      if(!this.fileList.length){
+        this.$message.error('请上传商品封面');
         return
       }
+      if(!this.form.name){
+        this.$message.error('请填写商品名称');
+        return
+      }
+      if(!this.form.summary){
+        this.$message.error('请填写概述');
+        return
+      }
+      if(!this.form.intro){
+        this.$message.error('请填写商品介绍');
+        return
+      }
+      if(!details_pic_url.length){
+        this.$message.error('请上传商品详情图');
+        return
+      }
+      if(!this.form.price){
+        this.$message.error('请填写商品售价');
+        return
+      }
+
 
       let url = '/product/new';
       let data = {

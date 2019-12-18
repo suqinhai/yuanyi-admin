@@ -31,7 +31,7 @@
          <template slot-scope="scope">
           <el-tooltip placement="top">
               <div slot="content"><img :src="scope.row.preview" width="200px"></div>
-              <a href="jacascript:;" class="el-icon-picture"></a>
+              <img :src="scope.row.preview" width="50px" class="el-icon-picture">
           </el-tooltip>
         </template>
       </el-table-column>
