@@ -46,7 +46,7 @@ export default {
     async beforeAvatarUpload(file) {
       let url = '/resource/token'
       await this.$axios.get(url).then(res => {
-        this.form.qiniuyunToken = res.data.token
+        this.$set(this.form,'qiniuyunToken',res.data.token)
       });
     },
     handleSuccess(response, file, fileList) {

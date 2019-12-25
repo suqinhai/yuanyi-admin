@@ -145,7 +145,7 @@ export default {
       }
     }
     this.getTree()
-    this.beforeAvatarUpload()
+    // this.beforeAvatarUpload()
   },
   methods: {
     getTree(){
@@ -173,7 +173,7 @@ export default {
     async beforeAvatarUpload(file) {
       let url = '/resource/token'
       await this.$axios.get(url).then(res => {
-        this.form.qiniuyunToken = res.data.token
+        this.$set(this.form,'qiniuyunToken',res.data.token)
       });
     },
     handleSuccess(response, file, fileList) {
@@ -214,6 +214,10 @@ export default {
       // }
       if(!this.fileList.length){
         this.$message.error('请上传商品封面');
+        return
+      }
+      if(!this.form.category_id){
+        this.$message.error('请选择商品分类');
         return
       }
       if(!this.form.name){

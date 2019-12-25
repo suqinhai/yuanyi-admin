@@ -124,7 +124,7 @@
           // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
 
           // 官网抄的图片上传 项目如果用了vue-resource可以用$http 因为比较懒就没改
-          images_upload_handler: (blobInfo, success, failure)=> {
+          images_upload_handler: async (blobInfo, success, failure)=> {
             let that = this
             var xhr, formData;
             xhr = new XMLHttpRequest();
@@ -143,7 +143,7 @@
               }
               success(that.qinniuyunImgDomain+json.key);
             };
-            this.beforeAvatarUpload()
+            await this.beforeAvatarUpload()
             formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
             formData.append('key',  this.uuid());
@@ -185,7 +185,7 @@
         this.cName = data.type_name
       }
       this.getTree()
-      this.beforeAvatarUpload()
+      // this.beforeAvatarUpload()
     },
     methods: {
       onClick (e) {
@@ -206,7 +206,7 @@
       async beforeAvatarUpload(file) {
         let url = '/resource/token'
         await this.$axios.get(url).then(res => {
-          this.form.qiniuyunToken = res.data.token
+          this.$set(this.form,'qiniuyunToken',res.data.token)
         });
       },
       handleSuccess(response, file, fileList) {
