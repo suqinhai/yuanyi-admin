@@ -247,7 +247,7 @@ export default {
         details_pic_url: details_pic_url.join(','),
         cover_url:  this.fileList[0].url,
         price: this.form.price,
-        category_id: this.form.category_id,
+        category_id: parseInt(this.form.category_id),
       }
       if(this.form.id){
         url = '/product/modify'
