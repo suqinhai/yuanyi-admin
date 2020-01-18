@@ -24,7 +24,7 @@
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
-        <el-form-item label="跳转地址">
+        <el-form-item label="跳转地址" v-if="form.postion_id != 5">
           <el-input v-model="form.ad_link"></el-input>
         </el-form-item>
         <!--         <el-form-item label="浮动文字">
@@ -142,7 +142,7 @@ export default {
         postion_id: this.form.postion_id,
         state: this.form.state ? 1 : 0,
         goto_type: 0,
-        ad_link: this.form.ad_link,
+        ad_link: this.form.postion_id == 5? '#' : this.form.ad_link,
         start_time: this.form.start_time,
         end_time: this.form.end_time,
       }

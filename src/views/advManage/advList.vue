@@ -38,6 +38,7 @@
           <span v-if="scope.row.postion_id == 2 ">公司</span>
           <span v-if="scope.row.postion_id == 3 ">方案</span>
           <span v-if="scope.row.postion_id == 4 ">新闻</span>
+          <span v-if="scope.row.postion_id == 5 ">关于我们图片集</span>
         </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="message" label="时间">
