@@ -73,6 +73,9 @@ export default {
       },{
         value:4,
         label: '新闻'
+      },{
+        value:5,
+        label: '关于我们图片集'
       }]
     }
   },
