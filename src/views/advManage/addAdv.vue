@@ -12,7 +12,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="开始/结束时间">
-          <el-date-picker v-model="form.time" range-separator="至" type="daterange" style="width:405px" start-placeholder="开始日期" end-placeholder="结束日期" @change="changeDate">
+          <el-date-picker v-model="form.time" range-separator="至" type="daterange" style="width:405px" start-placeholder="开始日期" end-placeholder="结束日期" @change="changeDate" >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="上线/下线">
@@ -106,7 +106,7 @@ export default {
   methods: {
     changeDate(data) {
       this.form.start_time = data[0].getTime() / 1000
-      this.form.end_time = data[0].getTime() / 1000
+      this.form.end_time = data[1].getTime() / 1000
     },
     changeSwitch() {
       this.form.state = !this.form.state
