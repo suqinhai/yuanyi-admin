@@ -35,6 +35,9 @@ const businessPartnersList = () => import("@/views/businessPartners/BusinessPart
 const addBusinessPartner = () => import("@/views/businessPartners/addBusinessPartner");
 const editBusinessPartner = () => import("@/views/businessPartners/editBusinessPartner");
 
+//本地视频上传
+const uploadLocalVedio = () => import("@/views/articleManage/uploadLocalVedio");
+
 Vue.use(Router);
 
 const vueRouter = new Router({
@@ -167,6 +170,13 @@ const vueRouter = new Router({
         hidden: true
       }
       ]
+    },
+
+    {
+      path: "/vl",
+      name: "",
+      component: uploadLocalVedio,
+      hidden: true
     },
 
     {

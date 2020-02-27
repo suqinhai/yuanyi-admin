@@ -3,7 +3,8 @@
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="文章分类">
         你选择了： {{cName}}
-        <el-tree :data="categorys" :props="categoryProps" @node-click="selectCategory" :render-after-expand="true" :highlight-current="true" empty-text="还没文章分类，现在去创建吧！" :accordion="true"></el-tree>
+        <el-tree :data="categorys" :props="categoryProps" @node-click="selectCategory" :render-after-expand="true"
+                 :highlight-current="true" empty-text="还没文章分类，现在去创建吧！" :accordion="true"></el-tree>
       </el-form-item>
       <el-form-item label="文章标题">
         <el-input v-model="form.title"></el-input>
@@ -18,7 +19,9 @@
         <el-input v-model="form.source_url"></el-input>
       </el-form-item>
       <el-form-item label="*文章预览图">
-        <el-upload class="upload-demo" :action="apiQiniuyunUpload" :before-upload="beforeAvatarUpload" :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess" :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
+        <el-upload class="upload-demo" :action="apiQiniuyunUpload" :before-upload="beforeAvatarUpload"
+                   :on-remove="handleRemove" :on-preview="handlePreview" :on-success="handleSuccess"
+                   :data="{token: form.qiniuyunToken}" name="file" :limit="1" list-type="picture" :file-list="fileList">
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </el-form-item>
@@ -44,10 +47,11 @@
         <el-input v-model="form.sort" placeholder="请输入排序" type="number"></el-input>
       </el-form-item>
       <!--<el-form-item label="文章点击量">-->
-        <!--<el-input v-model="form.sort" placeholder="请输入文章点击量" type="number"></el-input>-->
+      <!--<el-input v-model="form.sort" placeholder="请输入文章点击量" type="number"></el-input>-->
       <!--</el-form-item>-->
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" style="width: 100px;margin-right: 20px;margin-top: 20px;">确定</el-button>
+        <el-button type="primary" @click="onSubmit" style="width: 100px;margin-right: 20px;margin-top: 20px;">确定
+        </el-button>
         <el-button style="width: 100px;" @click="goback()">取消</el-button>
       </el-form-item>
     </el-form>
@@ -56,16 +60,16 @@
 
 </template>
 <script>
-  import tinymce from 'tinymce/tinymce'
-  import Editor from '@tinymce/tinymce-vue'
-  import 'tinymce/themes/silver'
+  import tinymce from "tinymce/tinymce";
+  import Editor from "@tinymce/tinymce-vue";
+  import "tinymce/themes/silver";
   // 编辑器插件plugins
   // 更多插件参考：https://www.tiny.cloud/docs/plugins/
-  import 'tinymce/plugins/image'// 插入上传图片插件
-  import 'tinymce/plugins/media'// 插入视频插件
-  import 'tinymce/plugins/table'// 插入表格插件
-  import 'tinymce/plugins/lists'// 列表插件
-  import 'tinymce/plugins/wordcount'// 字数统计插件
+  import "tinymce/plugins/image";// 插入上传图片插件
+  import "tinymce/plugins/media";// 插入视频插件
+  import "tinymce/plugins/table";// 插入表格插件
+  import "tinymce/plugins/lists";// 列表插件
+  import "tinymce/plugins/wordcount";// 字数统计插件
   export default {
     components: {
       Editor
@@ -73,7 +77,7 @@
     props: {
       value: {
         type: String,
-        default: ''
+        default: ""
       },
       disabled: {
         type: Boolean,
@@ -81,201 +85,215 @@
       },
       plugins: {
         type: [String, Array],
-        default: 'lists image media table wordcount'
+        default: "lists image media table wordcount"
       },
       toolbar: {
         type: [String, Array],
-        default: 'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat'
+        default: "undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat"
       }
     },
-    data () {
+    data() {
       return {
-        fileList:[],
-        categorys: [
-        ],
+        fileList: [],
+        categorys: [],
         categoryProps: {
-          children: 'sub_article_type',
-          id:"id",
-          label: "type_name",
+          children: "sub_article_type",
+          id: "id",
+          label: "type_name"
         },
-        cName:"",
-        form:{
+        cName: "",
+        form: {
           id: this.$route.query.id,
-          type_id:0,
-          title:'',
-          author:'',
-          source:'',
-          source_url:'',
-          preview:'',
-          key_word:'',
-          summary:'',
-          content:'',
-          states:false,
-          sort:0,
+          type_id: 0,
+          title: "",
+          author: "",
+          source: "",
+          source_url: "",
+          preview: "",
+          key_word: "",
+          summary: "",
+          content: "",
+          states: false,
+          sort: 0
         },
         init: {
-          language_url: process.env.NODE_ENV === 'production' ? '/moc@rgaykcul/static/zh_CN.js' : '/static/zh_CN.js',
-          language: 'zh_CN',
-          skin_url: process.env.NODE_ENV === 'production' ? '/moc@rgaykcul/static/tinymce/skins/ui/oxide' : '/static/tinymce/skins/ui/oxide',
+          language_url: process.env.NODE_ENV === "production" ? "/moc@rgaykcul/static/zh_CN.js" : "/static/zh_CN.js",
+          language: "zh_CN",
+          skin_url: process.env.NODE_ENV === "production" ? "/moc@rgaykcul/static/tinymce/skins/ui/oxide" : "/static/tinymce/skins/ui/oxide",
           height: 400,
           plugins: this.plugins,  // 父组件传入 或者 填写个默认的插件 要选用什么插件都可以 去官网可以查到
           toolbar: this.toolbar,  // 工具栏 我用到的也就是lists image media table wordcount 这些 根据需求而定
+          file_picker_callback: (callback, value, meta) => {
+            if (value === "") {
+              let w = document.body.clientWidth / 2;
+              let h = document.body.clientHeight / 2;
+              let window1 = window.open("#/vl", "", "top=" + (h / 2) + ",left=" + (w / 2) + ",width=" + w + ",height=" + h + ",location=no,menubar=no,resizable=no,toolbar=no,scrollbars=no");
+
+              let intervalId = setInterval(function() {
+                let item = localStorage.getItem("localvideourl");
+                if (item != null) {
+                  callback(item, meta);
+                  clearInterval(intervalId);
+                  window1.close();
+                }
+              }, 1000);
+            }
+          },
           // images_upload_url: apiQiniuyunUpload, //上传路径
           // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
 
           // 官网抄的图片上传 项目如果用了vue-resource可以用$http 因为比较懒就没改
-          images_upload_handler: async (blobInfo, success, failure)=> {
-            let that = this
+          images_upload_handler: async (blobInfo, success, failure) => {
+            let that = this;
             var xhr, formData;
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST', this.apiQiniuyunUpload);
+            xhr.open("POST", this.apiQiniuyunUpload);
             xhr.onload = function() {
               var json;
               if (xhr.status != 200) {
-                failure('HTTP Error: ' + xhr.status);
+                failure("HTTP Error: " + xhr.status);
                 return;
               }
               json = JSON.parse(xhr.responseText);
-              if (!json || typeof json.key != 'string') {
-                failure('Invalid JSON: ' + xhr.responseText);
+              if (!json || typeof json.key != "string") {
+                failure("Invalid JSON: " + xhr.responseText);
                 return;
               }
-              success(that.qinniuyunImgDomain+json.key);
+              success(that.qinniuyunImgDomain + json.key);
             };
-            await this.beforeAvatarUpload()
+            await this.beforeAvatarUpload();
             formData = new FormData();
-            formData.append('file', blobInfo.blob(), blobInfo.filename());
-            formData.append('key',  this.uuid());
-            formData.append('token',this.form.qiniuyunToken);
+            formData.append("file", blobInfo.blob(), blobInfo.filename());
+            formData.append("key", this.uuid());
+            formData.append("token", this.form.qiniuyunToken);
             xhr.send(formData);
           }
         },
         myValue: this.value
-      }
+      };
     },
-    mounted () {
+    mounted() {
       // 富文本初始化
-      tinymce.init({
-
-      })
+      tinymce.init({});
     },
-    created(){
-      if(this.form.id){
-        let data = JSON.parse(localStorage.getItem("articles"))
+    created() {
+      localStorage.removeItem("localvideourl");
+      if (this.form.id) {
+        let data = JSON.parse(localStorage.getItem("articles"));
         this.form = {
           id: this.form.id,
-          type_id:data.type_id,
-          title:data.title,
-          author:data.author,
-          source:data.source,
-          source_url:data.source_url,
-          key_word:data.key_word,
-          summary:data.summary,
-          states:data.states?true:false,
-          sort:data.sort,
-        }
+          type_id: data.type_id,
+          title: data.title,
+          author: data.author,
+          source: data.source,
+          source_url: data.source_url,
+          key_word: data.key_word,
+          summary: data.summary,
+          states: data.states ? true : false,
+          sort: data.sort
+        };
 
-        this.myValue = data.content
+        this.myValue = data.content;
         this.fileList = [{
           name: data.preview,
           id: data.preview,
-          url: data.preview,
-        }]
-        this.cName = data.type_name
+          url: data.preview
+        }];
+        this.cName = data.type_name;
       }
-      this.getTree()
+      this.getTree();
       // this.beforeAvatarUpload()
     },
     methods: {
-      onClick (e) {
-        this.$emit('onClick', e, tinymce)
+      onClick(e) {
+        this.$emit("onClick", e, tinymce);
       },
-      getTree(){
-        let url = '/article/category/tree';
+      getTree() {
+        let url = "/article/category/tree";
         this.$axios.get(url).then(res => {
-          this.categorys = res.data.tree
+          this.categorys = res.data.tree;
         });
       },
       selectCategory(data) {
-        if (data.sub_article_type === null){
-          this.cName = data.type_name
+        if (data.sub_article_type === null) {
+          this.cName = data.type_name;
           this.form.type_id = data.id;
         }
       },
       async beforeAvatarUpload(file) {
-        let url = '/resource/token'
+        let url = "/resource/token";
         await this.$axios.get(url).then(res => {
-          this.$set(this.form,'qiniuyunToken',res.data.token)
+          this.$set(this.form, "qiniuyunToken", res.data.token);
         });
       },
       handleSuccess(response, file, fileList) {
-        let key = response.key
+        let key = response.key;
         this.fileList.push({
           name: key,
           id: key,
           url: this.qinniuyunImgDomain + key
-        })
+        });
       },
       handleRemove(file, fileList) {
-        this.fileList = fileList
+        this.fileList = fileList;
       },
       handlePreview(file) {
-        window.open(file.url)
+        window.open(file.url);
       },
       changeOnlineSwitch() {
-        this.form.states = !!  this.form.states
+        this.form.states = !!this.form.states;
       },
-      onSubmit(){
-        let url = '/article/new';
+      onSubmit() {
+        let url = "/article/new";
 
-        if(undefined===this.fileList[0]){
-          this.$message.error('文章预览图 必须上传');
-          return
+        if (undefined === this.fileList[0]) {
+          this.$message.error("文章预览图 必须上传");
+          return;
         }
 
         let data = {
-          type_id:this.form.type_id,
-          title:this.form.title,
-          author:this.form.author,
-          source:this.form.source,
-          source_url:this.form.source_url,
-          preview:this.fileList[0].url,
-          key_word:this.form.key_word,
-          summary:this.form.summary,
-          content:this.myValue,
-          states:this.form.states?1:0,
-          sort:this.form.sort,
-        }
-        if(this.form.id){
-          url = '/article/modify'
-          data['id'] = this.form.id
+          type_id: this.form.type_id,
+          title: this.form.title,
+          author: this.form.author,
+          source: this.form.source,
+          source_url: this.form.source_url,
+          preview: this.fileList[0].url,
+          key_word: this.form.key_word,
+          summary: this.form.summary,
+          content: this.myValue,
+          states: this.form.states ? 1 : 0,
+          sort: this.form.sort
+        };
+        if (this.form.id) {
+          url = "/article/modify";
+          data["id"] = this.form.id;
         }
         this.$axios.post(url, data).then(res => {
           this.$message({
             message: res.msg,
-            type: 'success'
+            type: "success"
           });
-          this.goback()
+          this.goback();
         });
       },
-      uuid(){
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      uuid() {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
           var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
+            v = c == "x" ? r : (r & 0x3 | 0x8);
           return v.toString(16);
-        })
-       },
+        });
+      }
     },
     watch: {
-      value (newValue) {
-        this.myValue = newValue
+      value(newValue) {
+        this.myValue = newValue;
       },
-      myValue (newValue) {
-        this.$emit('input', newValue)
+      myValue(newValue) {
+        this.$emit("input", newValue);
       }
     }
-  }
+  };
 
 </script>
 
